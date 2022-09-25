@@ -14,7 +14,8 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import Pagination from "../../components/admin/Pagination";
 import { CustomTableHeadWithTwoActions, TableBox } from "../../commonStyle/CommonStyle";
-import axios from "axios";
+import { API } from "../../api";
+
 import ReservationsTableBody from "../../components/admin/reservations/ReservationsTableBody";
 
 const BASE_URL = process.env.REACT_APP_API;
@@ -24,7 +25,7 @@ export default function AdminReservation() {
     const [reservationlist, setReservationlist] = React.useState([]);
     // const [addUserOpen, setAddUserOpen] = React.useState(false);
     const getReservationlist = async () => {
-        const res = await axios.get(`${BASE_URL}/admin/reservation/list`);
+        const res = await API.get(`/admin/reservation/list`);
         setReservationlist(res.data);
     }
     React.useEffect(() => {

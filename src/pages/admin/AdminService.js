@@ -13,8 +13,9 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import Pagination from "../../components/admin/Pagination";
+import { API } from "../../api";
+
 import { CustomTableHeadWithTwoActions, TableBox } from "../../commonStyle/CommonStyle";
-import axios from "axios";
 import ServicesTableBody from "../../components/admin/services/ServicesTableBody";
 import AddServiceModal from "../../components/admin/services/AddServiceModal";
 
@@ -25,7 +26,7 @@ export default function AdminService() {
     const [servicelist, setServicelist] = React.useState([]);
     const [addUserOpen, setAddUserOpen] = React.useState(false);
     const getServicelist = async () => {
-        const res = await axios.get(`${BASE_URL}/service/list`);
+        const res = await API.get(`/service/list`);
         console.log('ok');
         setServicelist(res.data);
     }

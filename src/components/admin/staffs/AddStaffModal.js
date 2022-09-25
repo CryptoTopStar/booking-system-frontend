@@ -10,7 +10,8 @@ import {
 	FormControl
 } from "@mui/material";
 import { BlueButton, CustomForm } from "../../../commonStyle/CommonStyle";
-import axios from 'axios';
+import { API } from "../../../api";
+
 import { useSnackbar } from "notistack";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
 const validationSchema = yup.object({
@@ -37,7 +38,7 @@ export default function AddStaffModal(props) {
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
-			axios.post(`${BASE_URL}/admin/staff/add`, {
+			API.post(`/admin/staff/add`, {
 				telephone: values.telephone,
 				name: values.staffname,
 				description: values.description,

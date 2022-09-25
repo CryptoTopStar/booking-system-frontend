@@ -8,6 +8,7 @@ import { TextField, Box } from "@mui/material";
 import { DecideButton, MuiChip } from "../../../commonStyle/CommonStyle";
 import axios from 'axios';
 import { useSnackbar } from "notistack";
+import { API } from "../../../api";
 
 export default function DeleteUserModal(props) {
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -22,7 +23,7 @@ export default function DeleteUserModal(props) {
 		setOpen(false);
 	};
 	const deleteUser = () => {
-		axios.get(`${BASE_URL}/admin/user/delete/${props.row.id}`).then(result => {
+		API.get(`/admin/user/delete/${props.row.id}`).then(result => {
 			handleClose();
 			props.getUserlist();
 			enqueueSnackbar('ログインしました', { variant: 'success' });

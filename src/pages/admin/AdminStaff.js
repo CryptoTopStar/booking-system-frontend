@@ -11,7 +11,8 @@ import {
     Divider,
     ListItem
 } from "@mui/material";
-import axios from "axios";
+import { API } from "../../api";
+
 import AddIcon from "@mui/icons-material/Add";
 import Pagination from "../../components/admin/Pagination";
 import { CustomTableHeadWithTwoActions, TableBox } from "../../commonStyle/CommonStyle";
@@ -25,7 +26,7 @@ export default function AdminStaff() {
     const [stafflist, setStafflist] = React.useState([]);
     const [addUserOpen, setAddUserOpen] = React.useState(false);
     const getStafflist = async () => {
-        const res = await axios.get(`${BASE_URL}/admin/staff/list`);
+        const res = await API.get(`/admin/staff/list`);
         setStafflist(res.data);
     }
     React.useEffect(() => {

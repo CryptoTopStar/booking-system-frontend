@@ -13,6 +13,7 @@ import { BlueButton, CustomForm, MuiChip } from "../../../commonStyle/CommonStyl
 import { useFormik } from "formik";
 import axios from 'axios';
 import { useSnackbar } from "notistack";
+import { API } from "../../../api";
 
 
 const validationSchema = yup.object({
@@ -44,7 +45,7 @@ export default function EditServiceModal(props) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      axios.post(`${BASE_URL}/admin/service/update/${props.row.id}`, {
+      API.post(`/admin/service/update/${props.row.id}`, {
         description: values.description,
         name: values.name,
         price: values.price,

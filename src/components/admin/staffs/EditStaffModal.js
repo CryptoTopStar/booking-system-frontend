@@ -14,6 +14,7 @@ import { useFormik } from "formik";
 import axios from 'axios';
 import { useSnackbar } from "notistack";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
+import { API } from "../../../api";
 
 
 const validationSchema = yup.object({
@@ -42,7 +43,7 @@ export default function EditStaffModal(props) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      axios.post(`${BASE_URL}/admin/staff/update/${props.row.id}`, {
+      API.post(`/admin/staff/update/${props.row.id}`, {
         telephone: values.telephone,
         name: values.staffname,
         description: values.description,

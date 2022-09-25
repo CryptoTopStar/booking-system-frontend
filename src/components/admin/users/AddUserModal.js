@@ -14,8 +14,8 @@ import {
 import { BlueButton, CustomForm, FlexBox, FormBox } from "../../../commonStyle/CommonStyle";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
 import { useSnackbar } from "notistack";
+import { API } from "../../../api";
 
 const validationSchema = yup.object({
     email: yup
@@ -56,7 +56,7 @@ export default function AddUserModal(props) {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            axios.post(`${BASE_URL}/admin/user/sign-up`, {
+            API.post(`/admin/user/sign-up`, {
                 email: values.email,
                 password: values.password,
                 username: values.username,

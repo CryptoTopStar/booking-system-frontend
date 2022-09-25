@@ -10,7 +10,8 @@ import {
 } from "@mui/material";
 import { BlueButton, CustomForm, MuiChip } from "../../../commonStyle/CommonStyle";
 import { useFormik } from "formik";
-import axios from 'axios';
+
+import { API } from "../../../api";
 
 
 const validationSchema = yup.object({
@@ -38,7 +39,7 @@ export default function EditReservationModal(props) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      axios.post(`${BASE_URL}/admin/reservaion/update/${props.row.id}`, {
+      API.post(`/admin/reservaion/update/${props.row.id}`, {
         email: values.email,
         username: values.username,
         telephone: values.telephone,

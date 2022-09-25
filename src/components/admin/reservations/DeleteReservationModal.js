@@ -6,7 +6,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { TextField, Box } from "@mui/material";
 import { DecideButton, MuiChip } from "../../../commonStyle/CommonStyle";
-import axios from 'axios';
+import { API } from "../../../api";
+
 export default function DeleteReservationModal(props) {
     const [open, setOpen] = React.useState(false);
     const BASE_URL = process.env.REACT_APP_API;
@@ -18,7 +19,7 @@ export default function DeleteReservationModal(props) {
         setOpen(false);
     };
     const deleteReservation = () => {
-        axios.get(`${BASE_URL}/admin/reservation/delete/${props.row.reservation_id}`).then(result => {
+        API.get(`/admin/reservation/delete/${props.row.reservation_id}`).then(result => {
             handleClose();
             props.getReservationlist();
         }).catch((error) => console.log(error));

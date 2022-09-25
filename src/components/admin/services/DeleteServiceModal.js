@@ -8,6 +8,7 @@ import { TextField, Box } from "@mui/material";
 import { DecideButton, MuiChip } from "../../../commonStyle/CommonStyle";
 import axios from 'axios';
 import { useSnackbar } from "notistack";
+import { API } from "../../../api";
 
 export default function DeleteServiceModal(props) {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -22,7 +23,7 @@ export default function DeleteServiceModal(props) {
         setOpen(false);
     };
     const deleteService = () => {
-        axios.get(`${BASE_URL}/admin/service/delete/${props.row.id}`).then(() => {
+        API.get(`/admin/service/delete/${props.row.id}`).then(() => {
             enqueueSnackbar('Successfully deleted', { variant: 'success' });
             handleClose();
             props.getServicelist();

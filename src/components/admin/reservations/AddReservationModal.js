@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { BlueButton, CustomForm, FlexBox, FormBox } from "../../commonStyle/CommonStyle";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import axios from 'axios';
+import { API } from "../../../api";
 
 const validationSchema = yup.object({
     email: yup
@@ -54,7 +54,7 @@ export default function AddReservationModal(props) {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            axios.post(`${BASE_URL}/admin/reservation/add`, {
+            API.post(`/admin/reservation/add`, {
                 email: values.email,
                 password: values.password,
                 username: values.username,
