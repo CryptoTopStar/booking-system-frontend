@@ -8,17 +8,14 @@ import Footer from './footer'
 import ConfirmProvider from '../../../context/confirmProvider'
 import InquiryProvider from '../../../context/inquiryProvider'
 import { GlobalStateProvider } from '../../../context/globalState'
-import useDocumentTitle from '../../../hooks/useDocumentTitle'
-
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import "./layout.css"
 import { Outlet } from "react-router-dom";
 
-const Main = ({ location }) => {
-	//const title = useDocumentTitle(location);
+const Main = () => {
 	const description = 'ネイルなDemo Salonで。オンライン予約もこちらから。'
-	const url = 'https://festive-swartz-405bdc.netlify.app/'
-	const imageUrl = 'https://thirosue.github.io/hosting-image/booking/screenshot.png'
-	const title = 'Salon'
+	const title = 'luxbooking'
 	return (
 		<div>
 			<Helmet>
@@ -29,7 +26,7 @@ const Main = ({ location }) => {
 					content="minimum-scale=1, initial-scale=1, width=device-width"
 				/>
 				<meta name="Description" content={description} />
-				<meta property="og:site_name" content={process.env.GATSBY_SALON_NAME} />
+				<meta property="og:site_name" content="luxbooking" />
 				<meta property="og:title" content={title} />
 				<meta property="og:description" content={description} />
 				<meta property="og:type" content="website" />
@@ -39,13 +36,15 @@ const Main = ({ location }) => {
 				<GlobalStateProvider>
 					<ConfirmProvider>
 						<ThemeProvider theme={theme}>
-							<InquiryProvider>
-								<Header />
-								{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-								<CssBaseline />
-								<Outlet />
-								<Footer />
-							</InquiryProvider>
+							<LocalizationProvider dateAdapter={AdapterDayjs}>
+								<InquiryProvider>
+									<Header />
+									{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+									<CssBaseline />
+									<Outlet />
+									<Footer />
+								</InquiryProvider>
+							</LocalizationProvider>
 						</ThemeProvider>
 					</ConfirmProvider>
 				</GlobalStateProvider>

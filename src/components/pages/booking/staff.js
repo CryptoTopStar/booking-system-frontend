@@ -22,7 +22,6 @@ const Staff = ({ handleNext }) => {
 			staff
 		})
 	};
-
 	return (
 		<Grid container spacing={3}>
 			{
@@ -52,6 +51,7 @@ const Staff = ({ handleNext }) => {
 				</Grid>)
 				)
 			}
+
 		</Grid>
 	);
 }

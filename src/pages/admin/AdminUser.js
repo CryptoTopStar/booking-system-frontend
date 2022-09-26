@@ -15,11 +15,8 @@ import AddIcon from "@mui/icons-material/Add";
 import Pagination from "../../components/admin/Pagination";
 import { CustomTableHeadWithTwoActions, TableBox } from "../../commonStyle/CommonStyle";
 import UsersTableBody from "../../components/admin/users/UsersTableBody";
-import axios from "axios";
 import { API } from "../../api";
 import AddUserModal from "../../components/admin/users/AddUserModal";
-
-const BASE_URL = process.env.REACT_APP_API;
 
 export default function AdminUser() {
   const tableHeader = ["Name", "Email", "Telephone", "Point"];

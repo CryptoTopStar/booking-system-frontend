@@ -29,7 +29,6 @@ const validationSchema = yup.object({
 });
 
 export default function AddServiceModal(props) {
-	const BASE_URL = process.env.REACT_APP_API;
 
 	const formik = useFormik({
 		initialValues: {

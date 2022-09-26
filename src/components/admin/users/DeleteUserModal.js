@@ -14,7 +14,6 @@ export default function DeleteUserModal(props) {
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 	const [open, setOpen] = React.useState(false);
-	const BASE_URL = process.env.REACT_APP_API;
 	//hancle show or hidden modal
 	const handleClickOpen = () => {
 		setOpen(true);

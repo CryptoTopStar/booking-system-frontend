@@ -34,7 +34,6 @@ export default function EditUserModal(props) {
   const [open, setOpen] = React.useState(false);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const BASE_URL = process.env.REACT_APP_API;
   const formik = useFormik({
     initialValues: {
       email: `${props.row.email}`,

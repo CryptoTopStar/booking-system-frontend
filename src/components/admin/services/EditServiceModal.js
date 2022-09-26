@@ -35,7 +35,6 @@ const validationSchema = yup.object({
 export default function EditServiceModal(props) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [open, setOpen] = React.useState(false);
-  const BASE_URL = process.env.REACT_APP_API;
   const formik = useFormik({
     initialValues: {
       description: `${props.row.description}`,

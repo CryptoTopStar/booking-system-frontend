@@ -28,18 +28,21 @@ const MenuForm = ({ handleNext }) => {
 			{
 				!!menulist.length &&
 				menulist.map((menu) =>
-				(<Grid key={menu.id} item xs={12} sm={6} md={6}>
-					<Card variant='outlined' style={{ marginTop: '32px' }} onClick={() => next(menu)}  >
+				(<Grid key={menu.id} item xs={12} sm={6} md={6} lg={3}>
+					<Card style={{ marginTop: '32px' }} onClick={() => next(menu)}  >
 						<CardContent>
 							<Typography variant="h5" component="h2">
-								{menu.name}
+								Service name: {menu.name}
 							</Typography>
 							<br />
 							<Typography variant="h6" component="h3" marginBottom="12px">
-								{menu.time_slot * 30}分
+								Service time: {menu.time_slot * 30}分
+							</Typography>
+							<Typography variant="h6" component="h3" marginBottom="12px">
+								Price: {menu.price}$
 							</Typography>
 							<Typography variant="body2" component="p" color="textSecondary">
-								{menu.description}
+								Description: {menu.description}
 							</Typography>
 						</CardContent>
 					</Card>

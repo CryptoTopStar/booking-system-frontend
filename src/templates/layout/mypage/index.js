@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet"
 import { CssBaseline, DialogContent } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import NavBar from './navbar'
 
 // import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 // import theme from "../../../theme"
@@ -15,7 +14,6 @@ import { Outlet } from "react-router-dom";
 
 const MyPageLayout = ({ location }) => {
 	// const title = useDocumentTitle(location);
-	const [isMobileNavOpen, setMobileNavOpen] = React.useState(false);
 	return (
 		<>
 			<Helmet>
@@ -35,13 +33,7 @@ const MyPageLayout = ({ location }) => {
 								overflow: 'hidden',
 								width: '100%'
 							}} >
-								<Header onMobileNavOpen={() => setMobileNavOpen(true)} />
-								{/* <NavBar
-									location={location}
-									onMobileClose={() => setMobileNavOpen(false)}
-									openMobile={isMobileNavOpen}
-								/> */}
-								{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+								<Header />
 								<CssBaseline />
 								<div style={{
 									display: 'flex',

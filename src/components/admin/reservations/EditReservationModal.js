@@ -30,7 +30,6 @@ const validationSchema = yup.object({
 
 export default function EditReservationModal(props) {
   const [open, setOpen] = React.useState(false);
-  const BASE_URL = process.env.REACT_APP_API;
   const formik = useFormik({
     initialValues: {
       email: props.row.email,

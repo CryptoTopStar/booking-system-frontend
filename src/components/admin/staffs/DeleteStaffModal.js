@@ -6,7 +6,6 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { TextField, Box } from "@mui/material";
 import { DecideButton, MuiChip } from "../../../commonStyle/CommonStyle";
-import axios from 'axios';
 import { useSnackbar } from "notistack";
 import { API } from "../../../api";
 
@@ -14,7 +13,6 @@ export default function DeleteStaffModal(props) {
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 	const [open, setOpen] = React.useState(false);
-	const BASE_URL = process.env.REACT_APP_API;
 	//hancle show or hidden modal
 	const handleClickOpen = () => {
 		setOpen(true);

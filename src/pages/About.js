@@ -24,29 +24,30 @@ const About = () => {
     </div>
     <article className="content">
       <div className="container">
-        <h1 className="bar">ESSENTIALSについて</h1>
-        <aside className="info">
-          <div className="subtitle">
-            <i className="fas fa-utensils"></i>
-            ABOUT ESSENTIALS
+        <h1 className="bar">luxbookingについて</h1>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
+            <div className="postbody">
+              <p>
+                (株)LUXJAPAN制作の予約システムの美容室用デモサイトです。
+              </p>
+              <p>location:大阪府大阪市~</p>
+              <p>tel:06-1234-0000</p>
+            </div>
           </div>
-        </aside>
-        <div className="postbody">
-          <p>
-            sample SAMPLE
-          </p>
+
+          <ul>
+            <li>mon:月：11:00~20:00</li>
+            <li>tue:火：11:00~20:00</li>
+
+            <li>wed:火：定休日</li>
+            <li>thu:月：11:00~20:00</li>
+            <li>fri:月：11:00~20:00</li>
+            <li>sat:月：11:00~20:00</li>
+            <li>sun:月：11:00~20:00</li>
+          </ul>
         </div>
-        <Box mb="5rem" />
-        <h1 className="bar">お問い合わせ</h1>
-        <div className="postbody">
-          お問い合わせは
-          <span margin='0 5px'>
-            <Link href="#" onClick={handleClick}>
-              <LinkIcon size={20} />こちら
-            </Link>
-          </span>
-          から
-        </div>
+
       </div>
     </article>
   </>;

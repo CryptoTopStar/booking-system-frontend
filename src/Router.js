@@ -15,6 +15,8 @@ import { SnackbarProvider } from "notistack";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import AuthGuard from "./templates/layout/admin/authguard";
+import MyInfo from "./pages/myinfo";
+import AdminTime from "./pages/admin/AdminTime";
 
 const Admin = () => {
   return (
@@ -67,6 +69,10 @@ export default function Router() {
           path: "staffs",
           element: <AdminStaff />,
         },
+        {
+          path: 'times',
+          element: <AdminTime />
+        }
       ],
     },
     {
@@ -76,6 +82,16 @@ export default function Router() {
         {
           path: "",
           element: <MyPage />
+        }
+      ]
+    },
+    {
+      path: "/my-info",
+      element: <MyPageLayout />,
+      children: [
+        {
+          path: "",
+          element: <MyInfo />
         }
       ]
     }

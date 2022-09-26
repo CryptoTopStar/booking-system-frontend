@@ -1,34 +1,20 @@
 import React, { lazy, Suspense } from 'react'
 import MediaQuery from 'react-responsive'
-import {
-	Tooltip, Box, MenuItem,
-	Menu,
-	MenuList,
-	ListItemText,
-	Divider,
-	IconButton
-} from '@mui/material';
-import AccountCircle from "@mui/icons-material/AccountCircle";
-
+import { Tooltip, Box } from '@mui/material';
 import GlobalContext from '../../../context/global-context'
 import {
 	Home as HomeIcon,
 	Clock as ClockIcon,
 	Info as InfoIcon,
 	LogIn as LogInIcon,
-	// User as UserIcon,
-	LogOut as LogOutIcon,
 } from 'react-feather';
-import AuthService from "../../../services/auth";
-import useConfirm from '../../../hooks/useConfirm';
 import { useNavigate } from 'react-router-dom';
+import MyInfoHeader from '../myInfoHeader';
 const BookingForm = lazy(() => import('../../../components/pages/booking'));
 const SignInForm = lazy(() => import('../../../components/pages/auth/signin'));
 
 const Header = () => {
-	// const goMypage = () => navigate('/mypage') disable
 
-	// For booking
 	const [openBooking, setOpenBooking] = React.useState(false)
 	const navigate = useNavigate();
 	const handleClickOpenBooking = () => {
@@ -37,11 +23,8 @@ const Header = () => {
 	const handleCloseBooking = () => {
 		setOpenBooking(false);
 	};
-	const handleMenu = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
+
 	// For Sign in
-	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [open, setOpen] = React.useState(false);
 
 	const handleClickOpen = () => {
@@ -51,39 +34,12 @@ const Header = () => {
 		setOpen(false);
 	};
 	// For Logout
-	const confirm = useConfirm();
 	const context = React.useContext(GlobalContext);
 	let currentUser = {};
 	if (context.signedIn) currentUser = context.state.session;
 	else currentUser = JSON.parse(localStorage.getItem('user'));
-	const role = currentUser ? currentUser.role : '';
-	console.log(currentUser);
-	const signOut = async () => {
-		await AuthService.signOut()
-		setAnchorEl(null);
-		navigate('/');
 
-		context.updateState({
-			signedIn: false,
-			session: {}
-		})
-		confirm({ alert: true, description: 'ログアウトしました' })
-	};
-	const userClick = () => {
-		setAnchorEl(null);
-	};
-	const reservationClick = () => {
-		setAnchorEl(null);
-		navigate('/my-page')
-	}
-	const settingsClick = () => {
-		setAnchorEl(null);
-		navigate('/settings/personal')
-	}
-	const AdminClick = () => {
-		setAnchorEl(null);
-		navigate('/admin/')
-	}
+
 	return (
 
 		<header className="header">
@@ -134,60 +90,7 @@ const Header = () => {
 								</Tooltip>
 							</li>
 							<li>
-								{!!currentUser ? <>
-									<IconButton
-										size="large"
-										aria-label="account of current user"
-										aria-controls="menu-appbar"
-										aria-haspopup="true"
-										onClick={handleMenu}
-										color="inherit"
-									>
-										<AccountCircle style={{ width: "40px", height: "40px" }} />
-									</IconButton>
-									<Menu
-										id="menu-appbar"
-										anchorEl={anchorEl}
-										anchorOrigin={{
-											vertical: "bottom",
-											horizontal: "right",
-										}}
-										keepMounted
-										transformOrigin={{
-											vertical: "top",
-											horizontal: "right",
-										}}
-										open={Boolean(anchorEl)}
-										onClose={userClick}
-									>
-										<MenuList
-											sx={{ width: "250px", maxWidth: "100%" }}
-										>
-											<ListItemText
-												sx={{
-													flexGrow: 1,
-													alignItems: "center",
-													textAlign: "center",
-												}}
-											>
-												{currentUser.username}
-												<br />
-												{currentUser.email}
-											</ListItemText>
-											<Divider />
-
-											<MenuItem style={{ padding: "15px" }} onClick={reservationClick}>
-												予約状況
-											</MenuItem>
-											<MenuItem style={{ padding: "15px" }} onClick={settingsClick}>
-												My Info
-											</MenuItem>
-											<MenuItem style={{ padding: "15px" }} onClick={signOut}>
-												Sign out
-											</MenuItem>
-										</MenuList>
-									</Menu>
-								</> : <Tooltip title='sign in' >
+								{!!currentUser ? <MyInfoHeader /> : <Tooltip title='sign in' >
 									<Box sx={{ cursor: 'pointer' }} color="inherit" onClick={handleClickOpen} >
 										<LogInIcon />
 									</Box>
@@ -221,65 +124,11 @@ const Header = () => {
 								</Tooltip>
 							</li>
 							<li>
-								{!!currentUser ? <>
-									<IconButton
-										size="large"
-										aria-label="account of current user"
-										aria-controls="menu-appbar"
-										aria-haspopup="true"
-										onClick={handleMenu}
-										color="inherit"
-									>
-										<AccountCircle style={{ width: "40px", height: "40px" }} />
-									</IconButton>
-									<Menu
-										id="menu-appbar"
-										anchorEl={anchorEl}
-										anchorOrigin={{
-											vertical: "bottom",
-											horizontal: "right",
-										}}
-										keepMounted
-										transformOrigin={{
-											vertical: "top",
-											horizontal: "right",
-										}}
-										open={Boolean(anchorEl)}
-										onClose={userClick}
-									>
-										<MenuList
-											sx={{ width: "250px", maxWidth: "100%" }}
-										>
-											<ListItemText
-												sx={{
-													flexGrow: 1,
-													alignItems: "center",
-													textAlign: "center",
-												}}
-											>
-												{currentUser.data[0].username}
-												<br />
-												{currentUser.data[0].email}
-											</ListItemText>
-											<Divider />
-											{role === 'admin' ? <MenuItem style={{ padding: "15px" }} onClick={AdminClick}>Admin panel</MenuItem> : <div></div>}
-											<MenuItem style={{ padding: "15px" }} onClick={reservationClick}>
-												予約状況
-											</MenuItem>
-											<MenuItem style={{ padding: "15px" }} onClick={settingsClick}>
-												My Info
-											</MenuItem>
-											<MenuItem style={{ padding: "15px" }} onClick={signOut}>
-												Sign out
-											</MenuItem>
-										</MenuList>
-									</Menu>
-								</> : <Tooltip title='sign in' >
+								{!!currentUser ? <MyInfoHeader /> : <Tooltip title='sign in' >
 									<Box sx={{ cursor: 'pointer' }} color="inherit" onClick={handleClickOpen} >
 										Sign in
 									</Box>
 								</Tooltip>}
-
 							</li>
 						</ul>
 					</MediaQuery>

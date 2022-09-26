@@ -28,10 +28,10 @@ const data = [
     src: "/user.jpg"
   },
   {
-    title: "Service",
-    details: "Add and Delete the service",
+    title: "Service option",
+    details: "Add and Delete the service option",
     url: "/admin/services",
-    src: "/service.jpg"
+    src: "/option.jpg"
   },
   {
     title: "Reservation detail",
@@ -47,11 +47,23 @@ const data = [
     src: "/staff.jpg"
 
   },
+  {
+    title: "Reservation time",
+    details: "Manage reservation time",
+    url: "/admin/times",
+    src: "/time.jpg"
+
+  },
+  {
+    title: "Service",
+    details: "Add and Delete the service",
+    url: "/admin/services",
+    src: "/service.jpg"
+  },
 ];
 
 export default function AdminHome() {
   const navigate = useNavigate();
-  console.log(data);
   return (
     <>
       <Box
@@ -64,7 +76,7 @@ export default function AdminHome() {
         }}>
         <Grid container justifyContent="center" spacing={4}>
           {data.map((item) => (
-            <Grid style={{ display: 'flex', justifyContent: 'center' }} item xs={12} sm={12} md={6} key={item.title}>
+            <Grid style={{ display: 'flex', justifyContent: 'center' }} item xs={12} sm={6} md={6} lg={4} key={item.title}>
               <Item onClick={() => navigate(item.url)}>
                 <Box sx={{
                   height: '300px',

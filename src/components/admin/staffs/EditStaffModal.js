@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import { BlueButton, CustomForm, MuiChip } from "../../../commonStyle/CommonStyle";
 import { useFormik } from "formik";
-import axios from 'axios';
 import { useSnackbar } from "notistack";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
 import { API } from "../../../api";
@@ -33,10 +32,9 @@ const validationSchema = yup.object({
 export default function EditStaffModal(props) {
   const [open, setOpen] = React.useState(false);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
   const formik = useFormik({
     initialValues: {
-      staffname: `${props.row.staffname}`,
+      staffname: `${props.row.name}`,
       telephone: `${props.row.telephone}`,
       description: `${props.row.description}`
     },
@@ -46,7 +44,7 @@ export default function EditStaffModal(props) {
         telephone: values.telephone,
         name: values.staffname,
         description: values.description,
-        birthday: birthday
+        birthday: birthday,
       },).then(result => {
         enqueueSnackbar('ログインしました', { variant: 'success' });
         handleClose();
@@ -61,7 +59,7 @@ export default function EditStaffModal(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  const [birthday, setBirthday] = React.useState(new Date());
+  const [birthday, setBirthday] = React.useState(new Date(props.row.birthday));
   const handleChange = (newValue) => {
     setBirthday(newValue);
   };
@@ -120,7 +118,7 @@ export default function EditStaffModal(props) {
           <Box style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <Button
               className="normal-text round-button"
-              onClick={props.handleClose}
+              onClick={handleClose}
               sx={{ mr: 2 }}
             >
               Cancel
