@@ -27,7 +27,6 @@ const validationSchema = yup.object({
 });
 
 export default function AddStaffModal(props) {
-	const BASE_URL = process.env.REACT_APP_API;
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 	const formik = useFormik({
