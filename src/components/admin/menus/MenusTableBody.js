@@ -5,10 +5,10 @@ import {
   TableRow,
   Box,
 } from "@mui/material";
-import EditServiceModal from "./EditServiceModal";
-import DeleteServiceModal from "./DeleteServiceModal";
+import EditServiceModal from "./EditMenuModal";
+import DeleteServiceModal from "./DeleteMenuModal";
 
-export default function ServicesTableBody(props) {
+export default function MenusTableBody(props) {
   const rows = props.rows;
   return (
     <TableBody>
@@ -17,7 +17,10 @@ export default function ServicesTableBody(props) {
           <TableCell style={{ width: '16%' }} component="th" scope="row">
             {row.name}
           </TableCell>
+          <TableCell style={{ width: '16%' }}>{row.time}</TableCell>
+          <TableCell style={{ width: '16%' }}>{row.price}</TableCell>
           <TableCell style={{ width: '16%' }}>{row.description}</TableCell>
+          <TableCell style={{ width: '16%' }}>{row.time_slot ? parseInt(row.time_slot) * 30 : 0} 分</TableCell>
           <TableCell align="right">
             <Box className="hidden">
               <EditServiceModal getServicelist={props.getServicelist} row={row} />

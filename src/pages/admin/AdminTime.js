@@ -5,7 +5,7 @@ import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
 import { Grid, Typography, Box, Button } from '@mui/material';
 import { API } from '../../api';
 import { useSnackbar } from "notistack";
-
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminTime() {
 	let id = 0;
@@ -13,9 +13,9 @@ export default function AdminTime() {
 	const [from, setFrom] = React.useState(dayjs());
 	const [to, setTo] = React.useState(dayjs());
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
+	const navigate = useNavigate();
 	React.useEffect(() => {
-		API.get('/admin/time').then((res) => {
+		API.get('/time').then((res) => {
 			if (res.data.length != 0) {
 				check = true
 				id = res.data[0].id
@@ -27,9 +27,10 @@ export default function AdminTime() {
 		})
 	}, [])
 	React.useEffect(() => {
-		API.get('/admin/time').then((res) => {
+		API.get('/time').then((res) => {
 			if (res.data.length != 0) {
 				check = true
+				id = res.data[0].id
 			}
 		})
 	}, [from, to])
@@ -40,6 +41,7 @@ export default function AdminTime() {
 				to: to,
 			}).then(() => {
 				enqueueSnackbar('Success', { variant: 'success' });
+				navigate('/admin')
 			})
 		}
 		else {
@@ -48,6 +50,8 @@ export default function AdminTime() {
 				to: to,
 			}).then(() => {
 				enqueueSnackbar('Success', { variant: 'success' });
+				navigate('/admin')
+
 			})
 		}
 	}

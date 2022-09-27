@@ -77,7 +77,6 @@ const BookingChangeForm = ({ booking, open, handleClose }) => {
                 confirm({ alert: true, html: true, description: (<>選択した時間に先約があります。予約表を参考に別の時間を選択の上、再度予約変更してください。<br />予約変更できない場合はサロンへ直接へお問い合わせください。<br /></>) })
                     .then(() => doHandleClose())
             }
-            console.log('api done', body, response)
         }
         // 予約編集
         else {

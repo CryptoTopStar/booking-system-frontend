@@ -1,108 +1,84 @@
-import { Calendar } from "@progress/kendo-react-dateinputs";
-import { useEffect, useRef, useState } from "react";
-import "@progress/kendo-theme-default/dist/all.css";
-import userResavationTable from '../../../hooks/useResavationTable'
+import * as React from 'react';
+import dayjs from 'dayjs';
+import TextField from '@mui/material/TextField';
+import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+import { Button, Grid, Stack } from '@mui/material';
+import useReservationTable from '../../../hooks/useReservationTable'
+import moment from 'moment';
 
-const times = [
-    "08:00 - 10:00",
-    "10:00 - 12:00",
-    "12:00 - 14:00",
-    "14:00 - 16:00",
-    "16:00 - 18:00",
-    "18:00 - 20:00",
-];
-
-const getRandomNumInRange = (min, max) => {
-    return Math.floor(Math.random() * (max - min) + min);
+const isNotAvailable = (date) => {
+	const day = date.day();
+	const min = new Date();
+	const max = moment().add(35, 'days');
+	return day === 3 || date < min || date > max;
 };
+const timeAvailable = (reservationTable, from, to, checkDay) => {
+	let buttons = [];
+	let result = [];
+	let filterButtons = [];
+	let count = 0;
+	if (reservationTable.length != 0 && reservationTable.timeSlot != 0) {
+		while (moment(from).add((count + 1) * reservationTable.timeSlot * 30, 'minutes') < moment(to)) {
+			count++;
+			buttons.push(moment(from).add((count) * reservationTable.timeSlot * 30, 'minutes'))
+		}
+		filterButtons = buttons;
+		reservationTable.data.map((item) => {
+			if (moment(item.reservation_date, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD') == checkDay.format('YYYY-MM-DD')) {
+				filterButtons = buttons.filter((button) => { return button.format("HH:mm") != moment(item.reservation_date, 'YYYY-MM-DD HH:mm:ss').format('HH:mm') })
+			}
+		})
+		filterButtons.map((item) => {
+			result.push(item.format("HH:mm").toString() + ' - ' + item.add(reservationTable.timeSlot * 30, 'minutes').format("HH:mm").toString())
+		})
+	}
 
-const pickSlotTimes = times => {
-    // Get a random number that will indicate how many time slots we pick
-    const timesToPick = getRandomNumInRange(0, times.length);
+	return result;
+}
 
-    // If the random picked is the maximum possible then return all times
-    if (timesToPick === times.length - 1) {
-        return times;
-    }
+export default function Available({ handleNext, form }) {
+	const [value, setValue] = React.useState(dayjs());
+	const { reservationTable, from, to } = useReservationTable({ menu_id: form.menu.id, staff_id: form.staff.id })
+	const [buttons, setButtons] = React.useState([]);
+	const changeDay = (newValue) => {
+		setValue(newValue);
+		setButtons(timeAvailable(reservationTable, from, to, newValue));
+	}
+	const dataClick = (item) => {
+		let convert = value.format('YYYY-MM-DD');
+		handleNext({ date: convert, at: item })
+	}
+	return (
+		<Grid container marginTop='100px'>
+			<Grid item xs={12} sm={12} md={6} lg={5}>
+				<StaticDatePicker
+					orientation="landscape"
+					openTo="day"
+					value={value}
+					shouldDisableDate={isNotAvailable}
+					onChange={changeDay}
+					renderInput={(params) => <TextField {...params} />}
+				/>
+			</Grid>
+			<Grid item lg={1}></Grid>
+			<Grid item xs={12} sm={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+				<Grid container spacing={3}>
+					{!!buttons &&
+						buttons.map((item, index) => {
+							return (
+								<Grid item sx={{ display: 'flex', justifyContent: 'center' }} key={index} xs={6} md={6} lg={3}>
+									<Button key={index} onClick={() => dataClick(item)} >
+										{item}
+									</Button>
+								</Grid>
+							)
+						})
+					}
 
-    let timesPicked = [];
+				</Grid>
 
-    // Loop until we have picked specified number of times
-    while (timesToPick !== timesPicked.length - 1) {
-        // Get a new index and time
-        const index = getRandomNumInRange(0, times.length);
-        const selectedTime = times[index];
-        // If we already picked that time we continue
-        // as we don't want duplicated
-        if (timesPicked.includes(selectedTime)) continue;
-        // Keep the time
-        timesPicked.push(selectedTime);
-    }
+			</Grid>
+		</Grid>
 
-    // We need to sort the times, as they may not be in a correct order
-    return timesPicked.sort();
-};
-
-const BookDrivingSlot = props => {
-    const reservationTable = userResavationTable({ start, menu_id: form.menu.id, staff_id: form.staff.id })
-
-    const [bookingDate, setBookingDate] = useState(null);
-    const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
-    const [bookingTimes, setBookingTimes] = useState([]);
-    const timeSlotCacheRef = useRef(new Map());
-
-    useEffect(() => {
-        // Bail out if there is no date selected
-        if (!bookingDate) return;
-
-        // Get time slots from cache
-        let newBookingTimes = timeSlotCacheRef.current.get(
-            bookingDate.toDateString()
-        );
-
-        // If we have no cached time slots then pick new ones
-        if (!newBookingTimes) {
-            newBookingTimes = pickSlotTimes(times);
-            // Update cache with new time slots for the selected date
-            timeSlotCacheRef.current.set(bookingDate.toDateString(), newBookingTimes);
-        }
-
-        setBookingTimes(newBookingTimes);
-    }, [bookingDate]);
-
-    const onDateChange = e => {
-        setSelectedTimeSlot(null);
-        setBookingDate(e.value);
-    };
-
-    return (
-        <div className="k-my-8">
-            <div className="k-mb-4 k-font-weight-bold">Book driving slot</div>
-
-            <div className="k-flex k-display-flex k-mb-4">
-                <Calendar value={bookingDate} onChange={onDateChange} />
-                <div className="k-ml-4 k-display-flex k-flex-col">
-                    {bookingTimes.map(time => {
-                        return (
-                            <button
-                                key={time}
-                                className="k-button k-mb-4"
-                                onClick={e => setSelectedTimeSlot(time)}
-                            >
-                                {time}
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
-
-            {bookingDate && selectedTimeSlot ? (
-                <div>
-                    Selected slot: {bookingDate.toDateString()} at {selectedTimeSlot}
-                </div>
-            ) : null}
-        </div>
-    );
-};
-
-export default BookDrivingSlot;
+	);
+}

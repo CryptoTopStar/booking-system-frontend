@@ -9,7 +9,7 @@ import { DecideButton, MuiChip } from "../../../commonStyle/CommonStyle";
 import { useSnackbar } from "notistack";
 import { API } from "../../../api";
 
-export default function DeleteServiceModal(props) {
+export default function DeleteMenuModal(props) {
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 	const [open, setOpen] = React.useState(false);
@@ -21,7 +21,7 @@ export default function DeleteServiceModal(props) {
 		setOpen(false);
 	};
 	const deleteService = () => {
-		API.delete(`/admin/service/delete/${props.row.id}`).then(() => {
+		API.delete(`/admin/menu/delete/${props.row.id}`).then(() => {
 			enqueueSnackbar('Successfully deleted', { variant: 'success' });
 			handleClose();
 			props.getServicelist();
@@ -32,7 +32,7 @@ export default function DeleteServiceModal(props) {
 	return (
 		<div>
 			<Box onClick={handleClickOpen}>
-				<MuiChip label="Delete service" />
+				<MuiChip label="Delete service option" />
 			</Box>
 			<Dialog
 				open={open}
@@ -41,11 +41,11 @@ export default function DeleteServiceModal(props) {
 				<DialogTitle
 					className='dialog-title'
 				>
-					Delete service {props.row.name}
+					Delete service option {props.row.name}
 				</DialogTitle>
 				<DialogContent style={{ marginTop: "20px" }}>
 					<DialogContentText style={{ marginTop: "20px" }} >
-						Sure you want to delete this service?
+						Sure you want to delete this service option?
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>

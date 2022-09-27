@@ -18,7 +18,6 @@ const SignUpForm = ({ open, handleClose }) => {
 	};
 
 	const doSubmit = async data => {
-		console.log(data);
 		const response = await AuthService.signUp(data.username, data.password, data.email, data.telephone)
 		if (response && response.errorMessage) {
 			await confirm({ alert: true, description: response.errorMessage })

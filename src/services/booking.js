@@ -11,7 +11,6 @@ async function menulist() {
 }
 
 async function list(userId) {
-    console.log(userId);
     const response = await Booking.listReservation(userId).then((res) => { return res });
     return response
 }

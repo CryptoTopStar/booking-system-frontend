@@ -10,8 +10,8 @@ import {
 	DialogTitle
 } from "@mui/material";
 import { BlueButton, CustomForm } from "../../../commonStyle/CommonStyle";
+import { useNavigate } from "react-router-dom";
 import { API } from "../../../api";
-import { useSnackbar } from "notistack";
 
 const validationSchema = yup.object({
 	description: yup
@@ -20,23 +20,31 @@ const validationSchema = yup.object({
 	name: yup
 		.string()
 		.required("Username is required"),
+	price: yup
+		.number().positive()
+		.required("Telephone is required"),
+	timeSlot: yup
+		.number().integer().positive()
+		.required("TimeSlot is required"),
 });
 
-export default function AddServiceModal(props) {
-	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+export default function AddMenuModal(props) {
 
 	const formik = useFormik({
 		initialValues: {
 			description: "",
 			name: "",
+			price: "",
+			timeSlot: ""
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
-			API.post(`/admin/service/add`, {
+			API.post(`/admin/menu/add`, {
 				description: values.description,
 				name: values.name,
+				price: values.price,
+				time_slot: values.timeSlot,
 			}).then(result => {
-				enqueueSnackbar('Successfully updated', { variant: 'success' });
 				props.handleClose();
 				props.getServicelist();
 			}).catch((error) => console.log(error));
@@ -51,7 +59,7 @@ export default function AddServiceModal(props) {
 			maxWidth='xs'
 			style={{ width: '100%' }}
 		>
-			<DialogTitle className='dialog-title'>Add service</DialogTitle>
+			<DialogTitle className='dialog-title'>Add service option</DialogTitle>
 			<CustomForm onSubmit={formik.handleSubmit}>
 				<TextField
 					id="name"
@@ -62,7 +70,18 @@ export default function AddServiceModal(props) {
 					error={formik.touched.name && Boolean(formik.errors.name)}
 					helperText={formik.touched.name && formik.errors.name}
 				/>
-
+				<TextField
+					name="price"
+					label="Price"
+					type='number'
+					value={formik.values.price}
+					onChange={formik.handleChange}
+					error={formik.touched.price && Boolean(formik.errors.price)}
+					helperText={formik.touched.price && formik.errors.price}
+					InputProps={{
+						startAdornment: <InputAdornment position="start">$</InputAdornment>
+					}}
+				/>
 				<TextField
 					fullWidth
 					multiline
@@ -74,6 +93,15 @@ export default function AddServiceModal(props) {
 					onChange={formik.handleChange}
 					error={formik.touched.description && Boolean(formik.errors.description)}
 					helperText={formik.touched.description && formik.errors.description}
+				/>
+				<TextField
+					type="number"
+					name="timeSlot"
+					label="Time Slot"
+					value={formik.values.timeSlot}
+					onChange={formik.handleChange}
+					error={formik.touched.timeSlot && Boolean(formik.errors.timeSlot)}
+					helperText={formik.touched.timeSlot && formik.errors.timeSlot}
 				/>
 				<Box style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
 					<Button

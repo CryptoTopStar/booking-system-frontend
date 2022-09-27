@@ -43,7 +43,6 @@ export default function EditReservationModal(props) {
         username: values.username,
         telephone: values.telephone,
       },).then(result => {
-        console.log(result);
         handleClose();
         props.getUserlist();
       }).catch((error) => console.log(error));

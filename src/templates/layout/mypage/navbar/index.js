@@ -36,7 +36,6 @@ import useConfirm from '../../../../hooks/useConfirm'
 
 const NavBar = ({ location, onMobileClose, openMobile }) => {
   const context = React.useContext(GlobalContext);
-  console.log(context);
   const confirm = useConfirm();
   const navigate = useNavigate();
   useEffect(() => {

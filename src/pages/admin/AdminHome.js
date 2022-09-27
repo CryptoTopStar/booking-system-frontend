@@ -30,7 +30,7 @@ const data = [
   {
     title: "Service option",
     details: "Add and Delete the service option",
-    url: "/admin/services",
+    url: "/admin/menus",
     src: "/option.jpg"
   },
   {

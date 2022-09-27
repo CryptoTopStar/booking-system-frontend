@@ -9,27 +9,26 @@ import useConfirm from '../../../hooks/useConfirm'
 import SignInForm from '../auth/signin'
 import Menu from './menu';
 import ServiceForm from './service';
-import Status from './status';
 import Form from './form'
 import Review from './review'
 import AuthService from "../../../services/auth"
 import BookingService from "../../../services/booking";
 import Submit from "../../atoms/submit";
 import Staff from './staff';
-import BookDrivingSlot from './Available';
+import Available from './Available';
 const steps = ['Staff', "Service", 'Option', 'Date', 'Details', 'Review'];
 
 function getStepContent(handleNext, step, register, errors, form, control) {
 	switch (step) {
 		case 0:
 			//	return <Staff handleNext={handleNext} />
-			return <BookDrivingSlot handleNext={handleNext} />
+			return <Staff handleNext={handleNext} form={form} />
 		case 1:
 			return <ServiceForm handleNext={handleNext} />;
 		case 2:
 			return <Menu handleNext={handleNext} />;
 		case 3:
-			return <Status handleNext={handleNext} form={form} />;
+			return <Available handleNext={handleNext} form={form} />;
 		case 4:
 			return <Form handleNext={handleNext} register={register} errors={errors} form={form} control={control} />;
 		case 5:
@@ -87,7 +86,6 @@ async function syncUser(data) {
 					phone_number: `+81${data.tel}`,
 				},
 			)
-			console.log(response)
 		}
 		resolve(true)
 	})
@@ -95,7 +93,7 @@ async function syncUser(data) {
 
 async function book(data, confirm, handleClose) {
 	return new Promise(async resolve => {
-		let reservation = moment((data.date + ' ' + data.at), 'YYYY-MM-DD HHmm').toDate();
+		let reservation = moment((data.date + ' ' + data.at.substr(0, 5)), 'YYYY-MM-DD HH:mm').toDate();
 		let reservation_date = moment(reservation).format('YYYY-MM-DD HH:mm:ss');
 		const body = {
 			menu_id: data.menu.id,
@@ -158,7 +156,7 @@ const Index = ({ open, handleClose }) => {
 		}
 
 		const tax = 1.1
-		const dateText = !!data?.date ? moment((data.date + ' ' + data.at), 'YYYY-MM-DD HHmm').toDate() : form?.dateText
+		const dateText = !!data?.date ? data.date + ' ' + data.at : form?.dateText
 		const priceTaxExcluded = (form?.menu?.price ? form.menu.price : 0)
 		const price = Math.round(priceTaxExcluded * tax)
 		setForm(prevFormState => ({
@@ -235,7 +233,7 @@ const Index = ({ open, handleClose }) => {
 								) : (
 									<>
 										{getStepContent(handleNext, activeStep, register, errors, form, control)}
-										{2 < activeStep && (
+										{3 < activeStep && (
 											<div style={{ marginTop: '2%', display: 'flex', justifyContent: 'flex-end' }} >
 												{activeStep !== 0 && (
 													<Button sx={{ marginRight: '10px' }} onClick={handleBack}>

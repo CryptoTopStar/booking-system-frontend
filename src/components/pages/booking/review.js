@@ -5,7 +5,6 @@ import { Box, Grid, Typography, FormControl, InputBase, InputLabel } from '@mui/
 const ReviewForm = ({ form }) => {
 
     React.useEffect(() => {
-        console.log(form)
     }, [form]);
 
     return (
@@ -40,7 +39,7 @@ const ReviewForm = ({ form }) => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <FormControl fullWidth required>
-                        <InputLabel htmlFor="component-simple">Tel</InputLabel>
+                        <InputLabel htmlFor="component-simple">Telephone</InputLabel>
                         <Box mb="1rem" />
                         <InputBase id="tel" defaultValue={form.user.telephone} disabled />
                     </FormControl>

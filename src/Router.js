@@ -6,7 +6,6 @@ import Main from "./templates/layout/main";
 import MyPageLayout from "./templates/layout/mypage";
 import MyPage from "./pages/mypage";
 import AdminHome from "./pages/admin/AdminHome";
-import AdminService from "./pages/admin/AdminService";
 import AdminReservation from "./pages/admin/AdminReservation";
 import AdminUser from "./pages/admin/AdminUser";
 import AdminHeader from "./templates/layout/admin/header";
@@ -17,6 +16,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import AuthGuard from "./templates/layout/admin/authguard";
 import MyInfo from "./pages/myinfo";
 import AdminTime from "./pages/admin/AdminTime";
+import AdminMenu from "./pages/admin/AdminMenu";
+import AdminService from "./pages/admin/AdminService";
 
 const Admin = () => {
   return (
@@ -56,6 +57,10 @@ export default function Router() {
         {
           path: "users",
           element: <AdminUser />,
+        },
+        {
+          path: "menus",
+          element: <AdminMenu />,
         },
         {
           path: "services",
