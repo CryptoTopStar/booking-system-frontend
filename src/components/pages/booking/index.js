@@ -119,8 +119,8 @@ const submitMapping = {
 }
 
 const defaultValues = {
-
-	request: ""
+	request: "",
+	price: 0
 }
 const Index = ({ open, handleClose }) => {
 	const context = React.useContext(GlobalContext);
@@ -138,6 +138,7 @@ const Index = ({ open, handleClose }) => {
 	};
 
 	const handleNext = async data => {
+		console.log(form);
 		const confirmAction = confirmMapping[activeStep];
 		if (!!confirmAction) {
 			const stop = await confirmAction(data, form, confirm)

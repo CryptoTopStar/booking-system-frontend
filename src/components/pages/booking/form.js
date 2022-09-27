@@ -2,15 +2,18 @@ import React from 'react';
 import { Typography, Grid, TextField, Button, Stack } from '@mui/material';
 import { Controller } from 'react-hook-form';
 import useConfirm from '../../../hooks/useConfirm';
+import { useSnackbar } from "notistack";
 const BookingForm = ({ register, errors, form, control }) => {
 	const confirm = useConfirm();
-	const [price, setPrice] = React.useState(0);
+	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+	const [price, setPrice] = React.useState(form.menu.price);
 	const discountClick = () => {
 		confirm({ description: 'Are you sure to use 2 points' }).
 			then(() => {
+				enqueueSnackbar(`Price changet to ${form.menu.price * 0.9}`, { variant: 'success' });
 				setPrice(form.menu.price * 0.9)
 			})
-		console.log(price);
 	}
 	return (
 		<>
@@ -40,7 +43,7 @@ const BookingForm = ({ register, errors, form, control }) => {
 					<Grid item xs={12} md={6}>
 						<Controller
 							name='optionname'
-							defaultValue={form.menu.name}
+							value={form.menu.name}
 							render={({ field }) => <TextField fullWidth id='optionName' label='Option name' disabled  {...field} />}
 							control={control}
 						/>
@@ -51,9 +54,9 @@ const BookingForm = ({ register, errors, form, control }) => {
 						<Stack direction='row' spacing={3}>
 							<Controller
 								name='price'
-								//defaultValue={form.menu.price}
-								render={({ field }) => <TextField fullWidth id='price' label='Price' value="3"  {...field} />}
 								control={control}
+								render={() => <TextField fullWidth disabled id='price' value={price} label='Price' />}
+
 							/>
 							<Button variant='contained' onClick={discountClick}>Use 2 points to discount</Button>
 						</Stack>
@@ -83,14 +86,6 @@ const BookingForm = ({ register, errors, form, control }) => {
 						defaultValue={form.user.telephone}
 						fullWidth
 						disabled
-						// inputRef={register({
-						//     required: true,
-						//     pattern: {
-						//         value: /^[0-9]{10,11}$/i
-						//     }
-						// })}
-						// helperText={errors.tel && "数値のみで入力してください(10-11桁)"}
-						// error={Boolean(errors.tel)}
 						autoComplete="booking-tel"
 					/>
 				</Grid>
