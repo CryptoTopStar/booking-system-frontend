@@ -3,16 +3,32 @@ import { Typography, Grid, TextField, Button, Stack } from '@mui/material';
 import { Controller } from 'react-hook-form';
 import useConfirm from '../../../hooks/useConfirm';
 import { useSnackbar } from "notistack";
-const BookingForm = ({ register, errors, form, control }) => {
-	const confirm = useConfirm();
-	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+import GlobalContext from '../../../context/global-context';
 
+const BookingForm = ({ form, control, setValue }) => {
+	const confirm = useConfirm();
+	const context = React.useContext(GlobalContext);
+	let currentUser = {};
+	if (context.signedIn) currentUser = context.state.session;
+	else currentUser = JSON.parse(localStorage.getItem('user'));
+	const { enqueueSnackbar } = useSnackbar();
+	React.useEffect(() => {
+		setValue('price', form.menu.price)
+		setValue('check', false)
+	}, [])
 	const [price, setPrice] = React.useState(form.menu.price);
 	const discountClick = () => {
-		confirm({ description: 'Are you sure to use 2 points' }).
-			then(() => {
-				enqueueSnackbar(`Price changet to ${form.menu.price * 0.9}`, { variant: 'success' });
-				setPrice(form.menu.price * 0.9)
+		confirm({ description: 'Are you sure to use 2 points?' })
+			.then(() => {
+				if (currentUser.data[0].point < 2)
+					enqueueSnackbar('Your points are less than 2', { variant: 'error' });
+				else {
+					enqueueSnackbar(`Price changet to ${form.menu.price * 0.9}`, { variant: 'success' });
+					setValue('price', form.menu.price * 0.9)
+					setValue('check', true)
+					setPrice(form.menu.price * 0.9)
+				}
+
 			})
 	}
 	return (
@@ -22,31 +38,22 @@ const BookingForm = ({ register, errors, form, control }) => {
 			</Typography>
 			<Grid container spacing={3}>
 				<Grid item xs={12} md={12}>
-					<Controller
-						name='date'
+					<TextField
+						fullWidth
+						id='date'
+						label='Date'
+						disabled
 						defaultValue={form.dateText}
-						render={({ field }) => <TextField fullWidth id='date' label='Date' disabled  {...field} />}
-						control={control}
 					/>
 				</Grid>
 				{!!form.service?.name && (
 					<Grid item xs={12} md={6}>
-						<Controller
-							name='servicename'
-							defaultValue={form.service.name}
-							render={({ field }) => <TextField fullWidth id='serviceName' label='Service name' disabled  {...field} />}
-							control={control}
-						/>
+						<TextField fullWidth id='serviceName' label='Service name' disabled defaultValue={form.service.name} />
 					</Grid>
 				)}
 				{!!form.menu?.name && (
 					<Grid item xs={12} md={6}>
-						<Controller
-							name='optionname'
-							value={form.menu.name}
-							render={({ field }) => <TextField fullWidth id='optionName' label='Option name' disabled  {...field} />}
-							control={control}
-						/>
+						<TextField fullWidth id='optionName' label='Option name' disabled defaultValue={form.menu.name} />
 					</Grid>
 				)}
 				{!!form.menu?.name && (
@@ -56,7 +63,6 @@ const BookingForm = ({ register, errors, form, control }) => {
 								name='price'
 								control={control}
 								render={() => <TextField fullWidth disabled id='price' value={price} label='Price' />}
-
 							/>
 							<Button variant='contained' onClick={discountClick}>Use 2 points to discount</Button>
 						</Stack>
@@ -71,9 +77,6 @@ const BookingForm = ({ register, errors, form, control }) => {
 						defaultValue={form.user.email}
 						fullWidth
 						disabled
-						// inputRef={register({ required: true })}
-						// error={Boolean(errors.userName)}
-						// helperText={errors.userName && "入力してください"}
 						autoComplete="booking-name"
 					/>
 				</Grid>

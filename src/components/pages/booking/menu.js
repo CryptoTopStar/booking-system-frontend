@@ -1,10 +1,9 @@
 import React from 'react';
-import { Button, Box, Grid, Card, CardContent, Typography } from '@mui/material';
+import { Grid, Card, CardContent, Typography } from '@mui/material';
 import BookingService from '../../../services/booking';
 
 
 const MenuForm = ({ handleNext }) => {
-	const [menu, setMenu] = React.useState({});
 	const [menulist, setMenulist] = React.useState([]);
 	React.useEffect(() => {
 		const func = async () => {
@@ -14,13 +13,9 @@ const MenuForm = ({ handleNext }) => {
 		func();
 	}, []);
 	const next = menu => {
+		console.log(menu);
 		document.getElementById("dialog-root-position").scrollIntoView(true);
-		handleNext({
-			menu: menu
-		})
-		setMenu({
-			menu
-		})
+		handleNext({ menu: menu })
 	};
 
 	return (

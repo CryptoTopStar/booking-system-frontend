@@ -16,13 +16,13 @@ import BookingService from "../../../services/booking";
 import Submit from "../../atoms/submit";
 import Staff from './staff';
 import Available from './Available';
+
 const steps = ['Staff', "Service", 'Option', 'Date', 'Details', 'Review'];
 
-function getStepContent(handleNext, step, register, errors, form, control) {
+function getStepContent(handleNext, step, form, control, setValue) {
 	switch (step) {
 		case 0:
-			//	return <Staff handleNext={handleNext} />
-			return <Staff handleNext={handleNext} form={form} />
+			return <Staff handleNext={handleNext} />
 		case 1:
 			return <ServiceForm handleNext={handleNext} />;
 		case 2:
@@ -30,25 +30,12 @@ function getStepContent(handleNext, step, register, errors, form, control) {
 		case 3:
 			return <Available handleNext={handleNext} form={form} />;
 		case 4:
-			return <Form handleNext={handleNext} register={register} errors={errors} form={form} control={control} />;
+			return <Form form={form} control={control} setValue={setValue} />;
 		case 5:
 			return <Review form={form} />;
 		default:
 			throw new Error('Unknown step');
 	}
-}
-
-/*****************************************
- * Booking Confirm Settings *
- *****************************************/
-
-async function confirmMenu() {
-	let stopFlg = false
-	return stopFlg
-}
-
-const confirmMapping = {
-	0: confirmMenu,
 }
 
 /*****************************************
@@ -79,30 +66,47 @@ async function syncUser(data) {
 		const phoneUpdate = !data.user?.attributes?.phone_number || data.user.attributes.phone_number !== `+81${data.tel}`
 		const nameUpdate = !data.user?.attributes?.nickname || data.user.attributes.nickname !== data.userName
 		if (phoneUpdate || nameUpdate) {
-			const response = await AuthService.updateAttributes(
-				data.user,
-				{
-					nickname: data.userName,
-					phone_number: `+81${data.tel}`,
-				},
-			)
+			// const response = await AuthService.updateAttributes(
+			// 	data.user,
+			// 	{
+			// 		nickname: data.userName,
+			// 		phone_number: `+81${data.tel}`,
+			// 	},
+			// )
 		}
 		resolve(true)
 	})
 }
 
-async function book(data, confirm, handleClose) {
+async function book(data, confirm, handleClose, context) {
+
 	return new Promise(async resolve => {
 		let reservation = moment((data.date + ' ' + data.at.substr(0, 5)), 'YYYY-MM-DD HH:mm').toDate();
 		let reservation_date = moment(reservation).format('YYYY-MM-DD HH:mm:ss');
-		const body = {
+		const description = data.request ? data.request : ''
+		const body = [{
 			menu_id: data.menu.id,
 			user_id: data.user.id,
 			reservation_date: reservation_date,
-			description: data.request,
-			staff_id: data.staff.id
-		}
+			staff_id: data.staff.id,
+			description: description,
+			service_id: data.service.id,
+		}, { check: data.check }]
 		const response = await BookingService.create(body)
+		if (data.check) {
+			context.startProcess()
+			const response = await AuthService.getUserById(data.user.id)
+				.finally(() => context.endProcess())
+			if (response && response.errorMessage) {
+				await confirm({ alert: true, description: response.errorMessage })
+				return
+			}
+			context.updateState({
+				signedIn: true,
+				processing: false,
+				session: response,
+			})
+		}
 		if (response.status === 409) {
 			confirm({ alert: true, html: true, description: (<>選択した時間に先約があります。別の時間を選択の上、再度予約してください。<br />予約できない場合はサロンへ直接へお問い合わせください。<br /></>) })
 				.then(() => handleClose())
@@ -129,7 +133,7 @@ const Index = ({ open, handleClose }) => {
 
 	const [activeStep, setActiveStep] = React.useState(0);
 
-	const { register, handleSubmit, errors, clearErrors, control } = useForm(defaultValues);
+	const { handleSubmit, clearErrors, control, setValue } = useForm(defaultValues);
 
 	const doHandleClose = () => {
 		clearErrors()
@@ -138,34 +142,25 @@ const Index = ({ open, handleClose }) => {
 	};
 
 	const handleNext = async data => {
-		console.log(form);
-		const confirmAction = confirmMapping[activeStep];
-		if (!!confirmAction) {
-			const stop = await confirmAction(data, form, confirm)
-			if (stop) return false
-		}
-
 		let info = {}
 		const submitAction = submitMapping[activeStep];
 		if (!!submitAction) {
 			context.startProcess()
-			const results = await submitAction({ ...form, ...data }, confirm, doHandleClose)
+			const results = await submitAction({ ...form, ...data }, confirm, doHandleClose, context)
 				.catch(() => doHandleClose())
 				.finally(() => context.endProcess())
 			if (!results) return false
 			info = { ...results }
 		}
-
-		const tax = 1.1
+		//const tax = 1.1
 		const dateText = !!data?.date ? data.date + ' ' + data.at : form?.dateText
-		const priceTaxExcluded = (form?.menu?.price ? form.menu.price : 0)
-		const price = Math.round(priceTaxExcluded * tax)
+		const priceTaxExcluded = (data?.price ? data.price : 0)
+		const price = Math.round(priceTaxExcluded)
 		setForm(prevFormState => ({
 			...prevFormState,
 			...info,
 			...data,
 			dateText,
-			tax,
 			priceTaxExcluded,
 			priceTaxExcludedText: priceTaxExcluded.toLocaleString('ja-JP', { "style": "currency", "currency": "JPY" }),
 			price,
@@ -233,7 +228,7 @@ const Index = ({ open, handleClose }) => {
 									</Box>
 								) : (
 									<>
-										{getStepContent(handleNext, activeStep, register, errors, form, control)}
+										{getStepContent(handleNext, activeStep, form, control, setValue)}
 										{3 < activeStep && (
 											<div style={{ marginTop: '2%', display: 'flex', justifyContent: 'flex-end' }} >
 												{activeStep !== 0 && (
@@ -243,7 +238,6 @@ const Index = ({ open, handleClose }) => {
 												)}
 												<Submit
 													onClick={handleSubmit(handleNext)}
-
 												>
 													{activeStep === steps.length - 1 ? 'Confirm' : 'Next'}
 												</Submit>

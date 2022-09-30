@@ -18,6 +18,7 @@ import MyInfo from "./pages/myinfo";
 import AdminTime from "./pages/admin/AdminTime";
 import AdminMenu from "./pages/admin/AdminMenu";
 import AdminService from "./pages/admin/AdminService";
+import InfoLayout from "./templates/layout/userinfo";
 
 const Admin = () => {
   return (
@@ -92,7 +93,7 @@ export default function Router() {
     },
     {
       path: "/my-info",
-      element: <MyPageLayout />,
+      element: <InfoLayout />,
       children: [
         {
           path: "",

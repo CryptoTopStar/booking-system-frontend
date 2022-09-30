@@ -49,6 +49,7 @@ async function signIn(email, password) {
 	}
 }
 
+
 async function signOut() {
 	localStorage.clear();
 	sessionStorage.clear();
@@ -57,6 +58,15 @@ async function signOut() {
 async function getUser() {
 	let user = JSON.parse(localStorage.getItem('user'));
 	return user.data[0];
+}
+
+async function getUserById(id) {
+	const user = await Auth.getUserById(id).then((res) => {
+		return res.data
+	});
+	console.log(user);
+	localStorage.setItem('user', JSON.stringify(user));
+	return user;
 }
 
 const AuthService = {
@@ -68,6 +78,7 @@ const AuthService = {
 	// forgotPassword,
 	// forgotPasswordSubmit,
 	getUser,
+	getUserById
 	// updateAttributes,
 }
 

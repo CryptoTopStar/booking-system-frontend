@@ -13,42 +13,51 @@ const ReviewForm = ({ form }) => {
                 Booking Detail
             </Typography>
             <Grid container spacing={3}>
-                <Grid item xs={12} md={12} lg={6}>
+                <Grid item xs={12} sm={6}>
                     <FormControl fullWidth>
                         <InputLabel htmlFor="component-simple">Date</InputLabel>
                         <Box mb="1rem" />
-                        <InputBase id="date" defaultValue={form.dateText} disabled />
+                        <InputBase sx={{ marginLeft: '10px' }} id="date" defaultValue={form.dateText} disabled />
                     </FormControl>
                 </Grid>
-
-                {!!form.menu?.id && (
-                    <Grid item xs={12} md={12} lg={6}>
+                {!!form.service?.id && (
+                    <Grid item xs={12} sm={6}>
                         <FormControl fullWidth>
                             <InputLabel htmlFor="component-simple">Service name</InputLabel>
                             <Box mb="1rem" />
-                            <InputBase id="menu" defaultValue={form.menu.name} disabled />
+                            <InputBase sx={{ marginLeft: '10px' }} id="menu" defaultValue={form.service.name} disabled />
                         </FormControl>
                     </Grid>
                 )}
-                <Grid item xs={12} md={6}>
+                {!!form.menu?.id && (
+                    <Grid item xs={12} sm={6}>
+                        <FormControl fullWidth>
+                            <InputLabel htmlFor="component-simple">Service option name</InputLabel>
+                            <Box mb="1rem" />
+                            <InputBase sx={{ marginLeft: '10px' }} id="menu" defaultValue={form.menu.name} disabled />
+                        </FormControl>
+                    </Grid>
+                )}
+
+                <Grid item xs={12} sm={6}>
                     <FormControl fullWidth required>
                         <InputLabel htmlFor="component-simple">User name</InputLabel>
                         <Box mb="1rem" />
-                        <InputBase id="userName" defaultValue={form.user.email} disabled />
+                        <InputBase sx={{ marginLeft: '10px' }} id="userName" defaultValue={form.user.email} disabled />
                     </FormControl>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} sm={6}>
                     <FormControl fullWidth required>
                         <InputLabel htmlFor="component-simple">Telephone</InputLabel>
                         <Box mb="1rem" />
-                        <InputBase id="tel" defaultValue={form.user.telephone} disabled />
+                        <InputBase sx={{ marginLeft: '10px' }} id="tel" defaultValue={form.user.telephone} disabled />
                     </FormControl>
                 </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} sm={6}>
                     <FormControl fullWidth>
                         <InputLabel htmlFor="component-simple">Price</InputLabel>
                         <Box mb="1rem" />
-                        <InputBase id="price" defaultValue={form.priceText} disabled />
+                        <InputBase sx={{ marginLeft: '10px' }} id="price" defaultValue={form.priceText} disabled />
                     </FormControl>
                 </Grid>
                 <Grid item xs={12} md={12}>
@@ -56,6 +65,7 @@ const ReviewForm = ({ form }) => {
                         <InputLabel htmlFor="component-simple">Request</InputLabel>
                         <Box mb="1rem" />
                         <InputBase
+                            sx={{ marginLeft: '10px' }}
                             id="request"
                             defaultValue={form.request}
                             multiline
