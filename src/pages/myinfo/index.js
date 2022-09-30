@@ -1,4 +1,4 @@
-import { Button, Grid, Paper, Stack, Typography, Box } from "@mui/material";
+import { Button, Grid, Paper, Stack, Typography, Box, Divider } from "@mui/material";
 import React from "react";
 import { FormBox } from "../../commonStyle/CommonStyle";
 import GlobalContext from '../../context/global-context'
@@ -69,27 +69,26 @@ export default function MyInfo() {
 	if (context.signedIn) user = context.state.session;
 	else user = JSON.parse(localStorage.getItem('user'));
 	const [selectedImage, setSelectedImage] = React.useState(null);
-	const [imageUrl, setImageUrl] = React.useState('/icon.png');
+	const [imageUrl, setImageUrl] = React.useState(null);
 	React.useEffect(() => {
 		if (selectedImage) {
 			setImageUrl(URL.createObjectURL(selectedImage));
 		}
 	}, [selectedImage]);
 	return (
-		<Box sx={{
-			display: 'flex',
-			marginTop: '15vw',
-			justifyContent: 'center',
-			alignItems: 'center'
-		}}>
-			<Grid container spacing={3} >
-				<Grid item xs={12} lg={4}>
-					{/* <Paper>
-						{imageUrl && selectedImage && (
-							<Box mt={2} textAlign="center">
+		<Box margin='5% 15%'>
+			<Grid container spacing={5} >
+				<Grid item xs={12} lg={6}>
+					<Paper>
+						{imageUrl && selectedImage ? (
+							<Box mb={3} textAlign="center">
 								<img src={imageUrl} alt={selectedImage.name} height="100px" />
 							</Box>
-						)}
+						) :
+							<Box mb={3} textAlign="center">
+								<img src="/avatar.jpg" alt="avatar" height="100px" />
+							</Box>
+						}
 						<>
 							<input
 								accept="image/*"
@@ -99,37 +98,48 @@ export default function MyInfo() {
 								onChange={e => setSelectedImage(e.target.files[0])}
 							/>
 							<label htmlFor="select-image">
-								<Button variant="contained" color="primary" component="span">
+								<Button variant="contained" fullWidth color="primary" component="span">
 									Upload Image
 								</Button>
 							</label>
 						</>
-					</Paper> */}
+					</Paper>
 				</Grid>
-				<Grid item xs={12} lg={3}>
+				<Grid item xs={12} lg={6} >
 					<Paper >
+						<Typography sx={{ display: 'flex', justifyContent: 'center' }} variant="h5" gutterBottom>Contact info</Typography>
 						<Stack spacing={3} padding='20px'>
-							<Typography>Username: {user.data[0].username}</Typography>
-							<Typography>
-								Email address: {user.data[0].email}
-							</Typography>
-							<Typography>
-								Telephone number: {user.data[0].telephone}
-							</Typography>
-							<Typography>
-								Point: {user.data[0].point}
-							</Typography>
+							<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+								<Typography>Username:  </Typography>
+								<Typography>{user.data[0].username}</Typography>
+							</Box>
+							<Divider />
+							<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+								<Typography>Email address: </Typography>
+								<Typography>{user.data[0].email}</Typography>
+							</Box>
+							<Divider />
+							<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+								<Typography>Telephone number: </Typography>
+								<Typography>{user.data[0].telephone}</Typography>
+							</Box>
+							<Divider />
+							<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+								<Typography>Point:  </Typography>
+								<Typography>{user.data[0].point}</Typography>
+							</Box>
 						</Stack>
 					</Paper>
+					<br />
+					<Divider />
+					<br />
 
-				</Grid>
-				<Grid item xs={12} lg={3}>
 					<Paper >
+						<Typography sx={{ display: 'flex', justifyContent: 'center' }} variant="h5" gutterBottom>Payment method</Typography>
 						<PayPalScriptProvider>
 							<PaypalButton />
 						</PayPalScriptProvider>
 					</Paper>
-
 				</Grid>
 			</Grid>
 		</Box>

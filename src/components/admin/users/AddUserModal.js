@@ -43,7 +43,7 @@ const validationSchema = yup.object({
 
 export default function AddUserModal(props) {
 	const [showPassword, setShowPassword] = React.useState(false);
-	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+	const { enqueueSnackbar } = useSnackbar();
 
 	const formik = useFormik({
 		initialValues: {

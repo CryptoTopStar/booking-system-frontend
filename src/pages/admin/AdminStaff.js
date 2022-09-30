@@ -17,6 +17,7 @@ import Pagination from "../../components/admin/Pagination";
 import { CustomTableHeadWithTwoActions, TableBox } from "../../commonStyle/CommonStyle";
 import StaffsTableBody from "../../components/admin/staffs/StaffsTableBody";
 import AddStaffModal from "../../components/admin/staffs/AddStaffModal";
+import usePagination from "../../hooks/usePagination";
 
 
 export default function AdminStaff() {
@@ -39,6 +40,7 @@ export default function AdminStaff() {
 	const handleClose = () => {
 		setAddUserOpen(false);
 	}
+	const { emptyRows, setPage, setRowsPerPage, rowsPerPage, page } = usePagination(stafflist);
 
 	return (
 		<>
@@ -63,9 +65,9 @@ export default function AdminStaff() {
 					<TableContainer component={Paper}>
 						<Table>
 							<CustomTableHeadWithTwoActions name={tableHeader} />
-							<StaffsTableBody rows={stafflist} getStafflist={getStafflist} />
+							<StaffsTableBody rows={stafflist} getStafflist={getStafflist} emptyRows={emptyRows} rowsPerPage={rowsPerPage} page={page} />
 							<TableFooter>
-								<Pagination rows={stafflist} />
+								<Pagination rows={stafflist} setPage={setPage} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage} page={page} />
 							</TableFooter>
 						</Table>
 					</TableContainer>

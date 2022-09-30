@@ -17,6 +17,7 @@ import { API } from "../../api";
 import { CustomTableHeadWithTwoActions, TableBox } from "../../commonStyle/CommonStyle";
 import ServicesTableBody from "../../components/admin/services/ServicesTableBody";
 import AddServiceModal from "../../components/admin/services/AddServiceModal";
+import usePagination from "../../hooks/usePagination";
 
 export default function AdminService() {
     const tableHeader = ["Name", "description"];
@@ -38,6 +39,7 @@ export default function AdminService() {
     const handleClose = () => {
         setAddUserOpen(false);
     }
+    const { emptyRows, setPage, setRowsPerPage, rowsPerPage, page } = usePagination(servicelist);
 
     return (
         <>
@@ -62,9 +64,9 @@ export default function AdminService() {
                     <TableContainer component={Paper}>
                         <Table>
                             <CustomTableHeadWithTwoActions name={tableHeader} />
-                            <ServicesTableBody rows={servicelist} getServicelist={getServicelist} />
+                            <ServicesTableBody rows={servicelist} getServicelist={getServicelist} emptyRows={emptyRows} rowsPerPage={rowsPerPage} page={page} />
                             <TableFooter>
-                                <Pagination rows={servicelist} />
+                                <Pagination rows={servicelist} setPage={setPage} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage} page={page} />
                             </TableFooter>
                         </Table>
                     </TableContainer>

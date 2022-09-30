@@ -29,7 +29,7 @@ async function list(userId) {
 async function create(body) {
     //let result = {}
     const response = await Booking.addReservation(body)
-        .then((res) => console.log(res));
+        .then((res) => { return res });
     // await API.post(apiName, path, { ...myInit, body })
     //     .then(_ => { /* nop */ })
     //     .catch(error => {

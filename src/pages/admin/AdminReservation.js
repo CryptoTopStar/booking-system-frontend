@@ -11,11 +11,12 @@ import {
 	Divider,
 	ListItem
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import Pagination from "../../components/admin/Pagination";
-import { CustomTableHeadWithTwoActions, TableBox } from "../../commonStyle/CommonStyle";
+import { CustomTableHeadWithOneActions, TableBox } from "../../commonStyle/CommonStyle";
 import { API } from "../../api";
 import ReservationsTableBody from "../../components/admin/reservations/ReservationsTableBody";
+import Star from "@mui/icons-material/Star";
+import usePagination from "../../hooks/usePagination";
 
 export default function AdminReservation() {
 	const tableHeader = ["Username", "Booking Time", "Service name", "Staff name", "Price($)"];
@@ -28,7 +29,7 @@ export default function AdminReservation() {
 	React.useEffect(() => {
 		getReservationlist();
 	}, []);
-
+	const { emptyRows, setPage, setRowsPerPage, rowsPerPage, page } = usePagination(reservationlist);
 	return (
 		<>
 			<ListItem>
@@ -44,17 +45,17 @@ export default function AdminReservation() {
 					</Toolbar>
 					<Box className="admin-user-console-choose">
 						<Box className="user-admin-console-add-filters">
-							<AddIcon />
-							Add booking
+							<Star />
+							All bookings here
 						</Box>
 					</Box>
 					{/* <AddServiceModal open={addUserOpen} handleClose={handleClose} getServicelist={getServicelist} /> */}
 					<TableContainer component={Paper}>
 						<Table>
-							<CustomTableHeadWithTwoActions name={tableHeader} />
-							<ReservationsTableBody rows={reservationlist} getReservationlist={getReservationlist} />
+							<CustomTableHeadWithOneActions name={tableHeader} />
+							<ReservationsTableBody rows={reservationlist} getReservationlist={getReservationlist} emptyRows={emptyRows} rowsPerPage={rowsPerPage} page={page} />
 							<TableFooter>
-								<Pagination rows={reservationlist} />
+								<Pagination rows={reservationlist} setPage={setPage} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage} page={page} />
 							</TableFooter>
 						</Table>
 					</TableContainer>

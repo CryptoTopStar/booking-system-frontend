@@ -1,16 +1,11 @@
 import * as React from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { TextField, Box } from "@mui/material";
+import { DialogTitle, Box, DialogContentText, DialogContent, DialogActions, Dialog } from "@mui/material";
 import { DecideButton, MuiChip } from "../../../commonStyle/CommonStyle";
 import { useSnackbar } from "notistack";
 import { API } from "../../../api";
 
 export default function DeleteMenuModal(props) {
-	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+	const { enqueueSnackbar } = useSnackbar();
 
 	const [open, setOpen] = React.useState(false);
 	//hancle show or hidden modal

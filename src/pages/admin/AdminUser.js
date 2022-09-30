@@ -17,13 +17,13 @@ import { CustomTableHeadWithTwoActions, TableBox } from "../../commonStyle/Commo
 import UsersTableBody from "../../components/admin/users/UsersTableBody";
 import { API } from "../../api";
 import AddUserModal from "../../components/admin/users/AddUserModal";
+import usePagination from "../../hooks/usePagination";
 
 export default function AdminUser() {
   const tableHeader = ["Name", "Email", "Telephone", "Point"];
   const [userlist, setUserlist] = React.useState([]);
   const [addUserOpen, setAddUserOpen] = React.useState(false);
   const getUserlist = async () => {
-
     const res = await API.get(`/admin/user/list`);
     setUserlist(res.data);
   }
@@ -39,7 +39,8 @@ export default function AdminUser() {
   const handleClose = () => {
     setAddUserOpen(false);
   }
-
+  const { emptyRows, setPage, setRowsPerPage, rowsPerPage, page } = usePagination(userlist);
+  console.log(emptyRows);
   return (
     <>
       <ListItem>
@@ -63,9 +64,9 @@ export default function AdminUser() {
           <TableContainer component={Paper}>
             <Table>
               <CustomTableHeadWithTwoActions name={tableHeader} />
-              <UsersTableBody rows={userlist} getUserlist={getUserlist} />
+              <UsersTableBody rows={userlist} getUserlist={getUserlist} emptyRows={emptyRows} rowsPerPage={rowsPerPage} page={page} />
               <TableFooter>
-                <Pagination rows={userlist} />
+                <Pagination rows={userlist} setPage={setPage} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage} page={page} />
               </TableFooter>
             </Table>
           </TableContainer>

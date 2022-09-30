@@ -8,16 +8,17 @@ import {
   Avatar,
   Button
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import EditUserModal from "./EditUserModal";
 import DeleteUserModal from "./DeleteUserModal";
 
 export default function UsersTableBody(props) {
-  let navigate = useNavigate();
-  const rows = props.rows;
+  const { emptyRows, rowsPerPage, page, getUserlist, rows } = props;
   return (
     <TableBody>
-      {rows.map((row, index) => (
+      {!!rows && (rowsPerPage > 0
+        ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        : rows
+      ).map((row, index) => (
         <TableRow key={index} hover={true} className="row-hover">
           <TableCell style={{ width: '22%' }} component="th" scope="row">
             <Stack direction="row" spacing={0}>
@@ -36,16 +37,21 @@ export default function UsersTableBody(props) {
 
           <TableCell align="right">
             <Box className="hidden">
-              <EditUserModal getUserlist={props.getUserlist} row={row} />
+              <EditUserModal getUserlist={getUserlist} row={row} />
             </Box>
           </TableCell>
           <TableCell align="right">
             <Box className="hidden">
-              <DeleteUserModal row={row} getUserlist={props.getUserlist} />
+              <DeleteUserModal row={row} getUserlist={getUserlist} />
             </Box>
           </TableCell>
         </TableRow>
       ))}
+      {emptyRows > 0 && (
+        <TableRow style={{ height: 83 * emptyRows }}>
+          <TableCell colSpan={6} />
+        </TableRow>
+      )}
     </TableBody>
   );
 }

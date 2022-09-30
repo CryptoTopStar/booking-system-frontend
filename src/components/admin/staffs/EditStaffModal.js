@@ -31,7 +31,7 @@ const validationSchema = yup.object({
 
 export default function EditStaffModal(props) {
   const [open, setOpen] = React.useState(false);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const formik = useFormik({
     initialValues: {
       staffname: `${props.row.name}`,

@@ -12,7 +12,7 @@ export default function AdminTime() {
 	let check = false;
 	const [from, setFrom] = React.useState(dayjs());
 	const [to, setTo] = React.useState(dayjs());
-	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+	const { enqueueSnackbar } = useSnackbar();
 	const navigate = useNavigate();
 	React.useEffect(() => {
 		API.get('/time').then((res) => {

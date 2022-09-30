@@ -49,17 +49,11 @@ export default function EditReservationModal(props) {
 
     },
   });
-  //handle functions
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+
   const handleClose = () => {
     setOpen(false);
   };
-  const unblockClick = () => {
-    handleClose();
 
-  }
 
   return (
     <Box>
@@ -81,7 +75,6 @@ export default function EditReservationModal(props) {
             value={formik.values.username}
             onChange={formik.handleChange}
             error={formik.touched.username && Boolean(formik.errors.username)}
-          // helperText={formik.touched.username && formik.errors.username}
           />
           <TextField
             name="telephone"
@@ -89,7 +82,6 @@ export default function EditReservationModal(props) {
             value={formik.values.telephone}
             onChange={formik.handleChange}
             error={formik.touched.telephone && Boolean(formik.errors.telephone)}
-          // helperText={formik.touched.telephone && formik.errors.telephone}
           />
           <Divider />
           <TextField
@@ -100,7 +92,6 @@ export default function EditReservationModal(props) {
             value={formik.values.email}
             onChange={formik.handleChange}
             error={formik.touched.email && Boolean(formik.errors.email)}
-          // helperText={formik.touched.email && formik.errors.email}
           />
           <Box style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <Button

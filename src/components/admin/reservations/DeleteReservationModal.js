@@ -4,11 +4,15 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { TextField, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { DecideButton, MuiChip } from "../../../commonStyle/CommonStyle";
 import { API } from "../../../api";
+import { useSnackbar } from "notistack";
+
 
 export default function DeleteReservationModal(props) {
+	const { enqueueSnackbar } = useSnackbar();
+
 	const [open, setOpen] = React.useState(false);
 	//hancle show or hidden modal
 	const handleClickOpen = () => {
@@ -19,6 +23,8 @@ export default function DeleteReservationModal(props) {
 	};
 	const deleteReservation = () => {
 		API.get(`/admin/reservation/delete/${props.row.reservation_id}`).then(result => {
+			enqueueSnackbar('Successfully deleted', { variant: 'success' });
+
 			handleClose();
 			props.getReservationlist();
 		}).catch((error) => console.log(error));

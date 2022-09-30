@@ -8,17 +8,19 @@ import {
   Avatar,
   Button
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import EditStaffModal from "./EditStaffModal";
 import DeleteStaffModal from "./DeleteStaffModal";
 import moment from "moment/moment";
 
 export default function StaffsTableBody(props) {
-  let navigate = useNavigate();
-  const rows = props.rows;
+  const { emptyRows, rowsPerPage, page, rows, getStafflist } = props;
+
   return (
     <TableBody>
-      {rows.map((row, index) => (
+      {!!rows && (rowsPerPage > 0
+        ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        : rows
+      ).map((row, index) => (
         <TableRow key={index} hover={true} className="row-hover">
           <TableCell style={{ width: '22%' }} component="th" scope="row">
             <Stack direction="row" spacing={0}>
@@ -36,16 +38,21 @@ export default function StaffsTableBody(props) {
           <TableCell style={{ width: '23%' }}>{row.description}</TableCell>
           <TableCell align="right">
             <Box className="hidden">
-              <EditStaffModal getStafflist={props.getStafflist} row={row} />
+              <EditStaffModal getStafflist={getStafflist} row={row} />
             </Box>
           </TableCell>
           <TableCell align="right">
             <Box className="hidden">
-              <DeleteStaffModal row={row} getStafflist={props.getStafflist} />
+              <DeleteStaffModal row={row} getStafflist={getStafflist} />
             </Box>
           </TableCell>
         </TableRow>
       ))}
+      {emptyRows > 0 && (
+        <TableRow style={{ height: 83 * emptyRows }}>
+          <TableCell colSpan={6} />
+        </TableRow>
+      )}
     </TableBody>
   );
 }

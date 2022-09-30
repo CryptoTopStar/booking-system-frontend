@@ -11,7 +11,7 @@ import { useSnackbar } from "notistack";
 import { API } from "../../../api";
 
 export default function DeleteUserModal(props) {
-	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+	const { enqueueSnackbar } = useSnackbar();
 
 	const [open, setOpen] = React.useState(false);
 	//hancle show or hidden modal

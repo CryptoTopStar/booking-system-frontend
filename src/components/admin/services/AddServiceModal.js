@@ -23,7 +23,7 @@ const validationSchema = yup.object({
 });
 
 export default function AddServiceModal(props) {
-	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+	const { enqueueSnackbar } = useSnackbar();
 
 	const formik = useFormik({
 		initialValues: {

@@ -1,11 +1,11 @@
 import * as React from "react";
-import { useTheme } from "@mui/material/styles";
 import {
   Box,
   TablePagination,
   TableRow,
-  IconButton,
+  IconButton
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
@@ -82,11 +82,10 @@ function TablePaginationActions(props) {
   );
 }
 
-export default function Pagination(props) {
-  const rows = props.rows;
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+export default function Pagination(props) {
+
+  const { setPage, setRowsPerPage, rowsPerPage, page, rows } = props;
   const handleChangePage = (
     event,
     newPage
@@ -100,7 +99,6 @@ export default function Pagination(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
   return (
     <TableRow>
       <TablePagination

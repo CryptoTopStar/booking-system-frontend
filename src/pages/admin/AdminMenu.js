@@ -17,6 +17,7 @@ import { API } from "../../api";
 import { CustomTableHeadWithTwoActions, TableBox } from "../../commonStyle/CommonStyle";
 import MenusTableBody from "../../components/admin/menus/MenusTableBody";
 import AddMenuModal from "../../components/admin/menus/AddMenuModal";
+import usePagination from "../../hooks/usePagination";
 
 export default function AdminMenu() {
 	const tableHeader = ["Name", "Created Time", "Price", "description", "Time Slot"];
@@ -38,6 +39,7 @@ export default function AdminMenu() {
 	const handleClose = () => {
 		setAddUserOpen(false);
 	}
+	const { emptyRows, setPage, setRowsPerPage, rowsPerPage, page } = usePagination(servicelist);
 
 	return (
 		<>
@@ -64,7 +66,7 @@ export default function AdminMenu() {
 							<CustomTableHeadWithTwoActions name={tableHeader} />
 							<MenusTableBody rows={servicelist} getServicelist={getServicelist} />
 							<TableFooter>
-								<Pagination rows={servicelist} />
+								<Pagination rows={servicelist} setPage={setPage} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage} page={page} />
 							</TableFooter>
 						</Table>
 					</TableContainer>
