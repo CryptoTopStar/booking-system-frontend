@@ -10,7 +10,7 @@ const Header = ({ title, handleClose }) => {
 	else currentUser = JSON.parse(localStorage.getItem('user'));
 	return (
 		<AppBar position="relative">
-			<Toolbar>
+			<Toolbar >
 				<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
 					<CloseIcon />
 				</IconButton>
@@ -18,8 +18,8 @@ const Header = ({ title, handleClose }) => {
 					{title}
 				</Typography>
 				{!!currentUser &&
-					<Typography>
-						<StarIcon color="red" />
+					<Typography >
+						<StarIcon sx={{ color: 'red' }} />
 						{currentUser.data[0].point}
 					</Typography>}
 			</Toolbar>

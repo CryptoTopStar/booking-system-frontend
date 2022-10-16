@@ -19,32 +19,45 @@ const MenuForm = ({ handleNext }) => {
 	};
 
 	return (
-		<Grid container spacing={3}>
-			{
-				!!menulist.length &&
-				menulist.map((menu) =>
-				(<Grid key={menu.id} item xs={12} sm={6} md={6} lg={3}>
-					<Card style={{ marginTop: '32px' }} onClick={() => next(menu)}  >
-						<CardContent>
-							<Typography variant="h5" component="h2">
-								Service name: {menu.name}
-							</Typography>
-							<br />
-							<Typography variant="h6" component="h3" marginBottom="12px">
-								Service time: {menu.time_slot * 30}分
-							</Typography>
-							<Typography variant="h6" component="h3" marginBottom="12px">
-								Price: {menu.price}$
-							</Typography>
-							<Typography variant="body2" component="p" color="textSecondary">
-								Description: {menu.description}
-							</Typography>
-						</CardContent>
-					</Card>
-				</Grid>)
-				)
-			}
-		</Grid>
+		<>
+			<div style={{ marginLeft: '40vw', marginTop: '5vh' }}>
+				<div className="subtitle" >Choose your favorite option</div>
+				<div className="title-border"></div>
+			</div>
+			<div style={{ margin: '1vh 10vw' }}>
+				<Grid container spacing={3}>
+					{
+						!!menulist.length &&
+						menulist.map((menu) =>
+						(<Grid key={menu.id} item xs={12} sm={6} md={6} lg={3}>
+							<Card className='staff-card' style={{ marginTop: '32px' }} onClick={() => next(menu)} >
+								<div style={{ justifyContent: 'center', display: 'flex' }}>
+									<img src="https://demo.myherothemes.com/nancy/wp-content/uploads/sites/23/2015/08/nails-services.jpg" width="400" height="400" alt="nails-services" />
+
+								</div>
+								<CardContent style={{ textAlign: 'center' }}>
+									<Typography variant="h5" component="h2">
+										Service name: {menu.name}
+									</Typography>
+									<Typography variant="h6" component="h3" marginBottom="12px">
+										Service time: {menu.time_slot * 30}分
+									</Typography>
+									<Typography variant="h6" component="h3" marginBottom="12px">
+										Price: {menu.price}$
+									</Typography>
+									<Typography variant="body2" component="p" color="textSecondary">
+										Description: {menu.description}
+									</Typography>
+								</CardContent>
+							</Card>
+						</Grid>)
+						)
+					}
+				</Grid>
+			</div>
+
+		</>
+
 	);
 }
 

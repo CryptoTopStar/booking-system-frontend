@@ -83,7 +83,7 @@ svg {
   justify-content: center;
   list-style: none;
   margin-top: 18px;
-  color: #477294;
+  color: #FFFFFF;
 }
 
 .nav li:not(:last-child) {
@@ -576,4 +576,35 @@ svg {
 }
 .pagenation .next [class*="fa-"] {
   margin-left: 10px;
+}
+
+.menu-ul {
+  display: block;
+  width: 100%;
+  background: #f798aa;
+  height: 80px;
+  position: relative;
+}
+.menu-li {
+  font-size: 16px;
+  font-family: 'Open Sans',sans-serif;
+  font-weight: 800;
+  line-height: 1.6;
+  letter-spacing: 0;
+  vertical-align: baseline;
+  display: flex;
+  align-items: center;
+}
+
+.menu-li-booking {
+  padding: 0px 25px;
+  font-size: 16px;
+  font-family: 'Open Sans',sans-serif;
+  font-weight: 800;
+  line-height: 1.6;
+  letter-spacing: 0;
+  vertical-align: baseline;
+  display: flex;
+  align-items: center;
+  background: #7adfd8;
 }

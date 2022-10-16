@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet"
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "../../../theme"
 import Header from './header'
-import Footer from './footer'
 import ConfirmProvider from '../../../context/confirmProvider'
 import InquiryProvider from '../../../context/inquiryProvider'
 import { GlobalStateProvider } from '../../../context/globalState'
@@ -42,7 +41,6 @@ const Main = () => {
 									{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
 									<CssBaseline />
 									<Outlet />
-									<Footer />
 								</InquiryProvider>
 							</LocalizationProvider>
 						</ThemeProvider>

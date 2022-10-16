@@ -19,6 +19,7 @@ import AdminTime from "./pages/admin/AdminTime";
 import AdminMenu from "./pages/admin/AdminMenu";
 import AdminService from "./pages/admin/AdminService";
 import InfoLayout from "./templates/layout/userinfo";
+import Contact from "./pages/Contact";
 
 const Admin = () => {
   return (
@@ -44,6 +45,10 @@ export default function Router() {
         {
           path: "/about",
           element: <About />,
+        },
+        {
+          path: "/contact",
+          element: <Contact />,
         },
       ],
     },

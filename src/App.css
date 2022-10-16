@@ -143,3 +143,193 @@
 .typography-soft {
   color: #757575;
 }
+
+.page-title-wrapper {
+  height: 150px;
+  display: flex;
+  align-items: center;
+}
+.container {
+  margin: 2vh 10vw;
+}
+
+.title-border {
+  width: 50px;
+  height: 4px;
+  background: #f798aa;
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.subtitle {
+  font-size: 22px;
+  margin-bottom: 0;
+  font-weight: 800;
+  color: #444;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+}
+
+.team-member-name {
+  font-size: 16px;
+  text-transform: uppercase;
+  color: #444;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-top: 5px;
+}
+
+.appointment-quote {
+  width: 100%;
+  display: table;
+  vertical-align: center;
+  background: #f798aa;
+  margin-top: 30px;
+  position: fixed;
+  bottom: 0%;
+}
+
+.appointment_quote_content {
+  width: 40%;
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 85px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.content_part1 {
+  color: #fff;
+  font-size: 36px;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: -2px;
+  text-shadow: 0 1px 1px rgb(0 0 0 / 20%);
+  margin-bottom: -10px;
+  line-height: 1;
+  margin-left: -2px;
+}
+
+.content_part2 {
+  color: #fff;
+  text-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+}
+
+.appointment_quote_button {
+  width: 25%;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+#trigger-overlay2 {
+  background: #7adfd8;
+  padding: 15px 45px;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  text-shadow: 0 1px 1px rgb(0 0 0 / 20%);
+  top: -5px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.appointment_quote_phone_number {
+      width: 35%;
+    display: table-cell;
+    background: #7adfd8;
+    vertical-align: middle;
+    position: relative;
+    text-align: center;
+}
+.appointment_quote_phone_number_content {
+  color: #fff;
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+
+.appointment_quote_phone_number_icon {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  margin-left: -3px;
+  font-size: 26px;
+  background: #f798aa;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+  padding-top: 8px;
+}
+.staff-card {
+  padding-top:30px;
+  margin-top: 32px;
+  max-width: 340px;
+  cursor: pointer;  
+}
+.staff-card:hover {
+  padding-top: 30px;
+  margin-top: 32px;
+  max-width: 340px;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  --border-size: 0.3rem;
+  border: var(--border-size) solid transparent;
+
+  /* Paint an image in the border */
+  border-image: conic-gradient(
+      from var(--angle),
+      #f13658 0deg 45deg,
+      #f798aa 90deg 180deg,
+      #f798aa 180deg 270deg,
+      #f798aa 270deg 360deg
+    )
+    1 stretch;
+  background: rgb(255 255 255 / var(--opacity));
+}
+@supports (background: paint(houdini)) {
+  @property --opacity {
+    syntax: "<number>";
+    initial-value: 0.5;
+    inherits: false;
+  }
+
+  @property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  @keyframes opacityChange {
+    to {
+      --opacity: 1;
+    }
+  }
+
+  @keyframes rotate {
+    to {
+      --angle: 360deg;
+    }
+  }
+
+  .staff-card {
+    animation: rotate 1s linear infinite, opacityChange 0.5s infinite alternate;
+  }
+
+  /* Hide the warning */
+  .warning {
+    display: none;
+  }
+}
+
+.review-card {
+  height: 400px;
+  max-height: 450px;
+  width: fit-content;
+  padding: 2vh  2vw;
+}

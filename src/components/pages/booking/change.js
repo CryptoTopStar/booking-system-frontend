@@ -1,6 +1,4 @@
 import React from 'react';
-import moment from 'moment';
-import { head } from 'lodash';
 import { Stepper, Step, StepLabel, Box, Grid, Button, Typography } from '@mui/material';
 import FullScreenDialog from "../../../templates/dialog/fullscreen"
 import GlobalContext from '../../../context/global-context'
@@ -128,7 +126,7 @@ const BookingChangeForm = ({ booking, open, handleClose }) => {
                 ) : (
                     <>
                         {getStepContent(activeStep, register, setValue, form, control)}
-                        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+                        {/* <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', }}>
                             {activeStep !== 0 && (
                                 <Button onClick={handleBack} >
                                     Back
@@ -140,7 +138,7 @@ const BookingChangeForm = ({ booking, open, handleClose }) => {
                             >
                                 {activeStep === steps.length - 1 ? 'Confirm' : 'Next'}
                             </Submit>
-                        </div>
+                        </div> */}
                     </>
                 )}
             </>

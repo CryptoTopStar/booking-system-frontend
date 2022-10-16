@@ -21,7 +21,7 @@ const validationSchema = yup.object({
 		.required("Username is required"),
 	price: yup
 		.number().positive()
-		.required("Telephone is required"),
+		.required("Price is required"),
 	timeSlot: yup
 		.number().integer().positive()
 		.required("TimeSlot is required"),

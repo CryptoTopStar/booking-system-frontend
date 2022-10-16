@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
-
+import { THEME_COLOR } from "../utils/color";
 import {
   Dialog,
   DialogActions,
@@ -177,3 +177,16 @@ export const SeeMoreBox = styled(Box)(() => ({
     backgroundColor: '#cccccc',
   }
 }))
+
+
+export const Title = styled(Box)(() => ({
+  borderLeft: `5px solid ${THEME_COLOR}`,
+  paddingLeft: '50px',
+  height: '50px',
+  marginLeft: '23vw',
+  display: 'flex',
+  alignItems: 'center',
+  textTransform: 'uppercase',
+}))
+
+

@@ -230,7 +230,7 @@ const Index = ({ open, handleClose }) => {
 									<>
 										{getStepContent(handleNext, activeStep, form, control, setValue)}
 										{3 < activeStep && (
-											<div style={{ marginTop: '2%', display: 'flex', justifyContent: 'flex-end' }} >
+											<div style={{ margin: '2vh 10vw', display: 'flex', justifyContent: 'flex-end', }} >
 												{activeStep !== 0 && (
 													<Button sx={{ marginRight: '10px' }} onClick={handleBack}>
 														Back

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import dayjs from 'dayjs';
-import TextField from '@mui/material/TextField';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
-import { Button, Grid, Stack } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import useReservationTable from '../../../hooks/useReservationTable'
 import moment from 'moment';
+import { CalendarPicker } from '@mui/x-date-pickers';
 
 const isNotAvailable = (date) => {
 	const day = date.day();
@@ -49,36 +49,43 @@ export default function Available({ handleNext, form }) {
 		handleNext({ date: convert, at: item })
 	}
 	return (
-		<Grid container marginTop='100px'>
-			<Grid item xs={12} sm={12} md={6} lg={5}>
-				<StaticDatePicker
-					orientation="landscape"
-					openTo="day"
-					value={value}
-					shouldDisableDate={isNotAvailable}
-					onChange={changeDay}
-					renderInput={(params) => <TextField {...params} />}
-				/>
-			</Grid>
-			<Grid item lg={1}></Grid>
-			<Grid item xs={12} sm={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'center' }}>
-				<Grid container spacing={3}>
-					{!!buttons &&
-						buttons.map((item, index) => {
-							return (
-								<Grid item sx={{ display: 'flex', justifyContent: 'center' }} key={index} xs={6} md={6} lg={3}>
-									<Button key={index} onClick={() => dataClick(item)} >
-										{item}
-									</Button>
-								</Grid>
-							)
-						})
-					}
+		<div style={{ margin: '1vh 10vw' }}>
+			<Grid container marginTop='100px' spacing={5}>
+				<Grid item xs={12} sm={12} md={6} lg={6}>
+					<div >
+						<div className="subtitle"  >Choose available days</div>
+						<div className="title-border"></div>
+					</div>
+					<CalendarPicker
+						date={value}
+						shouldDisableDate={isNotAvailable}
+						onChange={changeDay}
+					/>
+				</Grid>
+				<Grid item xs={12} sm={12} md={6} lg={6} >
+					<div >
+						<div className="subtitle" >Time</div>
+						<div className="title-border"></div>
+					</div>
+					<Grid container spacing={3}>
+						{!!buttons &&
+							buttons.map((item, index) => {
+								return (
+									<Grid item sx={{ display: 'flex', justifyContent: 'center' }} key={index} xs={6} md={6} lg={3}>
+										<Button key={index} onClick={() => dataClick(item)} >
+											{item}
+										</Button>
+									</Grid>
+								)
+							})
+						}
+
+					</Grid>
 
 				</Grid>
-
 			</Grid>
-		</Grid>
+		</div>
+
 
 	);
 }

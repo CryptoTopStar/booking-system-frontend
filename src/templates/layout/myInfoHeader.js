@@ -1,7 +1,6 @@
 import React from "react";
 import IconButton from "@mui/material/IconButton";
 import ListItemText from "@mui/material/ListItemText";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Menu from "@mui/material/Menu";
@@ -10,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import GlobalContext from '../../context/global-context'
 import AuthService from "../../services/auth";
 import useConfirm from '../../hooks/useConfirm';
+import { Avatar } from "@mui/material";
 
 export default function MyInfoHeader() {
 	const context = React.useContext(GlobalContext);
@@ -62,7 +62,7 @@ export default function MyInfoHeader() {
 				onClick={handleMenu}
 				color="inherit"
 			>
-				<AccountCircle style={{ width: "30px", height: "30px" }} />
+				<Avatar style={{ width: "40px", height: "40px", backgroundColor: '#7adfd8' }} alt={currentUser.data[0].username} src="/staff-list/kadie.jpg" />
 			</IconButton>
 			<Menu
 				id="menu-appbar"
