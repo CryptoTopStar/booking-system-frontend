@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, TextField, Box, styled } from '@mui/material';
+import { Button, Grid, FormControl, Box, styled, InputLabel, Input } from '@mui/material';
 import { green } from '@mui/material/colors';
 import SignUpForm from './signup';
 import ForgotForm from './forgot';
@@ -74,19 +74,21 @@ const SigninForm = ({ open, handleClose }) => {
 		title: "Sign in",
 		fields: (
 			<>
-
 				<Grid item xs={12}>
-					<TextField
-						id="email"
-						name="email"
-						label="Email"
-						fullWidth
-						variant='standard'
-						onChange={e => setValue("email", e.target.value)}
-					// {...register("username", { required: true })}
-					// error={Boolean(errors.username)}
-					// helperText={errors.username && "入力してください"}
-					/>
+					<FormControl fullWidth>
+						<InputLabel htmlFor="standard-adornment-password">Email</InputLabel>
+						<Input
+							id="email"
+							name="email"
+							label="Email"
+							fullWidth
+							variant='standard'
+							onChange={e => setValue("email", e.target.value)}
+						// {...register("username", { required: true })}
+						// error={Boolean(errors.username)}
+						// helperText={errors.username && "入力してください"}
+						/>
+					</FormControl>
 				</Grid>
 				<Grid item xs={12}>
 					<Password

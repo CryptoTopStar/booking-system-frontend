@@ -1,4 +1,3 @@
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -238,12 +237,12 @@
 }
 
 .appointment_quote_phone_number {
-      width: 35%;
-    display: table-cell;
-    background: #7adfd8;
-    vertical-align: middle;
-    position: relative;
-    text-align: center;
+  width: 35%;
+  display: table-cell;
+  background: #7adfd8;
+  vertical-align: middle;
+  position: relative;
+  text-align: center;
 }
 .appointment_quote_phone_number_content {
   color: #fff;
@@ -266,10 +265,10 @@
   padding-top: 8px;
 }
 .staff-card {
-  padding-top:30px;
+  padding-top: 30px;
   margin-top: 32px;
   max-width: 340px;
-  cursor: pointer;  
+  cursor: pointer;
 }
 .staff-card:hover {
   padding-top: 30px;
@@ -331,5 +330,5 @@
   height: 400px;
   max-height: 450px;
   width: fit-content;
-  padding: 2vh  2vw;
+  padding: 2vh 2vw;
 }
